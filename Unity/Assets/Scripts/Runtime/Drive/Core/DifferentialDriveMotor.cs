@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [RequireComponent(typeof(Rigidbody2D))]
 public class DifferentialDriveMotor : MonoBehaviour
 {
-    [SerializeField] private float _baseSpeed = 2f;
+    [SerializeField] private float _speedForward = 2f;
+    [SerializeField] private float _speedBack = 2f;
     [SerializeField] private float _turnSpeed = 300f;
 
     private Rigidbody2D _rb;
@@ -18,7 +20,15 @@ public class DifferentialDriveMotor : MonoBehaviour
         float forwardPower = leftFactor + rightFactor;
         float diff = rightFactor - leftFactor;
 
-        Vector2 velocity = transform.up * (_baseSpeed * forwardPower * input.Throttle);
+        Vector2 velocity;
+        if (input.Throttle < 0f)
+        {
+            velocity = transform.up * (_speedBack * forwardPower * input.Throttle);
+        }
+        else
+        {
+            velocity = transform.up * (_speedForward * forwardPower * input.Throttle);
+        }
         float angular = (_turnSpeed * diff * input.Throttle) + (_turnSpeed * input.Turn);
 
         _rb.linearVelocity = velocity;

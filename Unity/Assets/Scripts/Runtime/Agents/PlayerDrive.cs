@@ -46,7 +46,6 @@ public class PlayerDrive : MonoBehaviour
             _motor.Stop();
             return;
         }
-
         _motor.Apply(_cachedInput, _stats.LeftFactor, _stats.RightFactor);
     }
 }
