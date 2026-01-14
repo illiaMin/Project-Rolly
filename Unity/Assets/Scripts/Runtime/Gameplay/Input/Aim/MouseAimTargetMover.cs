@@ -2,14 +2,11 @@ using UnityEngine;
 
 public class MouseAimTargetMover : MonoBehaviour, IAimTargetMover
 {
-    [SerializeField] private Camera _camera;
+    private Camera _camera;
 
-    private void Awake()
+    public void SetCamera(Camera camera)
     {
-        if (_camera == null)
-        {
-            _camera = Camera.main;
-        }
+        _camera = camera;
     }
 
     public void Move(Transform aimTarget)

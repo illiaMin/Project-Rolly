@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class AimTargetDriver : MonoBehaviour
 {
-    [SerializeField] private Transform _aimTarget;
-    [SerializeField] private MonoBehaviour _moverBehaviour;
+    private Transform _aimTarget;
+    private MonoBehaviour _moverBehaviour;
 
     private IAimTargetMover _mover;
 
@@ -24,6 +24,10 @@ public class AimTargetDriver : MonoBehaviour
         _mover.Move(_aimTarget);
     }
 
+    public void SetAimTarget(Transform aimTarget)
+    {
+        _aimTarget = aimTarget;
+    }
     public void SetMover(MonoBehaviour moverBehaviour)
     {
         _moverBehaviour = moverBehaviour;

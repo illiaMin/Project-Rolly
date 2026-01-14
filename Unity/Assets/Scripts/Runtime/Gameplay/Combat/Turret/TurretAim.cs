@@ -2,8 +2,8 @@ using UnityEngine;
 
 public class TurretAim : MonoBehaviour
 {
-    [SerializeField] private Transform _aimTarget;
-    [SerializeField] private float _turnSpeedDegreesPerSecond = 150f;
+    private Transform _aimTarget;
+    private float _turnSpeedDegreesPerSecond = 150f;
 
     private void LateUpdate()
     {
@@ -20,5 +20,11 @@ public class TurretAim : MonoBehaviour
             desiredRotation,
             _turnSpeedDegreesPerSecond * Time.deltaTime
         );
+    }
+
+    public void Init(Transform target, float turretTurnSpeedDegreesPerSecond)
+    {
+        _aimTarget = target;
+        _turnSpeedDegreesPerSecond = turretTurnSpeedDegreesPerSecond;
     }
 }

@@ -1,0 +1,16 @@
+using UnityEngine;
+
+public class AttackerTest : Attacker
+{
+    protected override void Attack(Transform turret)
+    {
+        ProjectilesPool.TryGet(out Projectile newProjectile);
+        newProjectile.gameObject.SetActive(true);
+        newProjectile.transform.position = turret.transform.position;
+        newProjectile.transform.up = turret.transform.up;
+        newProjectile.transform.localPosition += turret.transform.up * Distance;
+        newProjectile.GetComponent<SpriteRenderer>().sprite = ProjectileInfo.Sprite;
+
+        newProjectile.GetComponent<Projectile>().SetInfo(ProjectileInfo, ProjectilesPool);
+    }
+}
