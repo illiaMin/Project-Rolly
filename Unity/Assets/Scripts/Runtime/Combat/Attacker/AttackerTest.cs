@@ -11,6 +11,8 @@ public class AttackerTest : Attacker
         newProjectile.transform.localPosition += turret.transform.up * Distance;
         newProjectile.GetComponent<SpriteRenderer>().sprite = ProjectileInfo.Sprite;
 
-        newProjectile.GetComponent<Projectile>().SetInfo(ProjectileInfo, ProjectilesPool);
+        newProjectile.SetInfo(ProjectileInfo, ProjectilesPool);
+        newProjectile.GetRigidbody2D().
+            AddForce(turret.transform.up * ProjectileInfo.Speed,  ForceMode2D.Impulse);
     }
 }

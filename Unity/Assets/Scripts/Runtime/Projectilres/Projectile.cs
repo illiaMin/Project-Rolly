@@ -8,18 +8,18 @@ public class Projectile : MonoBehaviour
     private SO_Damage _damage;
     private float _timeLeft = 0f;
 
-    private Rigidbody2D _rigidbody2D;
-    
     ProjectilesPool _projectilesPool;
+    
+    private Rigidbody2D _rigidbody2D;
+    public Rigidbody2D GetRigidbody2D() => _rigidbody2D;
 
-    private void Start()
+    private void Awake()
     {
         _rigidbody2D = GetComponent<Rigidbody2D>();
     }
 
     public void SetInfo(SO_Projectile info, ProjectilesPool pool)
     {
-        _speed =  info.Speed;
         _lifeTime = info.LifeTime;
         _damage = info.Damage;
         
@@ -28,7 +28,6 @@ public class Projectile : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        _rigidbody2D.linearVelocity = transform.up * _speed;
         _timeLeft -= Time.fixedDeltaTime;
 
         if (_timeLeft <= 0)
