@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class TurretCreatorContext
 {
-    public readonly SO_AllTurrets AllTurrets;
+    public readonly SO_AllModules AllModules;
     public readonly Turret Prefab;
     public readonly PlayerEvents PlayerEvents;
     public readonly Transform AimTarget;
@@ -10,14 +10,14 @@ public class TurretCreatorContext
     public readonly GameObject ProjectilePrefab;
     
     public TurretCreatorContext
-        (SO_AllTurrets allTurrets, 
+        (SO_AllModules allModules, 
             Turret prefab, 
             PlayerEvents playerEvents,
             Transform aimTarget,
             ProjectilesPool  projectilesPool,
             GameObject projectile)
     {
-        AllTurrets = allTurrets;
+        AllModules = allModules;
         Prefab = prefab;
         PlayerEvents = playerEvents;
         AimTarget = aimTarget;
