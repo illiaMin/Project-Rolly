@@ -1,0 +1,24 @@
+public enum ModuleName
+{
+    Rifle,
+    RifleFire,
+    RiflePhysic,
+    RifleElectro,
+    Sword,
+    Shocker,
+    Flamethrower,
+    EHG_69,
+    FHG_FireBall,
+    KHG_Crusher,
+    Shield,
+    Dash,
+    Minimap,
+    Insect,
+    Tracks,
+    Wheels,
+    IdCardRolly,
+    IdCardNewOne,
+    Vision,
+    B_menu,
+    Battery
+}
