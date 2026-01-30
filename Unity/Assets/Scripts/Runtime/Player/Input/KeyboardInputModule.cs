@@ -5,6 +5,7 @@ public class KeyboardInputModule : InputModule
     [SerializeField] MouseAimTargetMover _mouseAimTargetMover;
     [SerializeField] AimTargetDriver _aimTargetDriver;
     [SerializeField] MouseInputShot _mouseInputShot;
+    [SerializeField] KeyboardBMenuInput _keyboardBMenuInput;
     
     public override void Init(InputContext c)
     {
@@ -12,5 +13,6 @@ public class KeyboardInputModule : InputModule
         _aimTargetDriver.SetAimTarget(c.Target);
         _aimTargetDriver.SetMover(_mouseAimTargetMover);
         c.PlayerEvents.AddListenerToOnTurretChanged(_mouseInputShot.SetTurret);
+        _keyboardBMenuInput.Init(c.PlayerEvents);
     }
 }
