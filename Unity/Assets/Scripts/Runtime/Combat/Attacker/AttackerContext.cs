@@ -2,11 +2,12 @@ using UnityEngine;
 
 public class AttackerContext
 {
-    public PlayerEvents PlayerEvents;
-    public GameObject ProjectilePrefab;
-    public ProjectilesPool  ProjectilesPool;
-    public float Distance = 0.6f;
-    public SO_Projectile ProjectileInfo;
+    public readonly PlayerEvents PlayerEvents;
+    public readonly GameObject ProjectilePrefab;
+    public readonly ProjectilesPool  ProjectilesPool;
+    public readonly float Distance = 0.6f;
+    public readonly SO_Projectile ProjectileInfo;
+    
     public AttackerContext(
         PlayerEvents playerEvents,
         GameObject projectilePrefab,

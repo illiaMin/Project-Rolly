@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class TurretCreator : MonoBehaviour
 {
-    SO_AllTurrets _allTurrets;
+    SO_AllModules _allModules;
     Turret _prefab;
     PlayerEvents _playerEvents;
     Transform _aimTarget;
@@ -11,19 +11,19 @@ public class TurretCreator : MonoBehaviour
     GameObject _projectilePrefab;
     
     [SerializeField] private float _distance = 0.6f;
-    public void Init(TurretCreatorContext tcc)
+    public Turret Init(TurretCreatorContext tcc, ModuleName name)
     {
-        _allTurrets = tcc.AllTurrets;
+        _allModules = tcc.AllModules;
         _prefab = tcc.Prefab;
         _playerEvents = tcc.PlayerEvents;
         _aimTarget = tcc.AimTarget;
         _projectilesPool = tcc.ProjectilesPool;
         _projectilePrefab =  tcc.ProjectilePrefab;
         
-        InstantiateTurret("Test");
+        return CreateTurret(name);
     }
 
-    public void InstantiateTurret(string turretName)
+    public Turret CreateTurret(ModuleName turretName)
     {
         GetInfoAboutTurret(turretName, out SO_PlayerTurret info);
         CreateTurret(out Turret turret);
@@ -35,11 +35,12 @@ public class TurretCreator : MonoBehaviour
         InitAttacker(attacker, info);
         
         _playerEvents.InvokeOnTurretChanged(turret);
+        
+        return turret;
     }
-
-    void GetInfoAboutTurret(string turretName, out SO_PlayerTurret info)
+    void GetInfoAboutTurret(ModuleName turretName, out SO_PlayerTurret info)
     {
-        info = _allTurrets.Turrets.Get(turretName);
+        info = _allModules.Modules.Get(turretName) as SO_PlayerTurret;
     }
     void CreateTurret(out Turret turret)
     {
@@ -55,14 +56,11 @@ public class TurretCreator : MonoBehaviour
         var spriteRenderer 
             = turret.GetComponentInChildren<SpriteRenderer>();
         spriteRenderer.sprite = info.Sprite;
-        
     }
-
     void InitializeTurretAim(Turret turret, SO_PlayerTurret info)
     {
         turret.GetComponent<TurretAim>().Init(_aimTarget, info.TurnSpeedDegreesPerSecond);
     }
-
     void CreateAttacker(SO_PlayerTurret info, out Attacker attacker)
     {
         attacker = Instantiate(info.Attacker, transform, false);

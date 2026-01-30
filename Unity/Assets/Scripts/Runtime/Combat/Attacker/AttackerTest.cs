@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class AttackerTest : Attacker
 {
-    protected override void Attack(Transform turret)
+    protected override void Attack(OnShotEventContext context)
     {
+        var turret = context.Turret;
         ProjectilesPool.TryGet(out Projectile newProjectile);
         newProjectile.gameObject.SetActive(true);
         newProjectile.transform.position = turret.transform.position;

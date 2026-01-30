@@ -19,7 +19,7 @@ public abstract class Attacker : MonoBehaviour
         
         PlayerEvents.AddListenerToOnShot(Attack);
     }
-    protected abstract void Attack(Transform turret);
+    protected abstract void Attack(OnShotEventContext context);
     
     private void OnDisable()
     {

@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Damage: {fileID: 11400000, guid: 8a3455c82b347554db894d36d68c518e, type: 2}
   Speed: 10
-  LifeTime: 0.5
+  LifeTime: 0.75
   Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
