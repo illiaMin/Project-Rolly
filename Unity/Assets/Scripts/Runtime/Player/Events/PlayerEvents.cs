@@ -5,20 +5,19 @@ public class PlayerEvents : MonoBehaviour
 {
     #region OnShot
     
-        private readonly UnityEvent<Transform> _onShot 
-            = new UnityEvent<Transform>();
+        private readonly UnityEvent<OnShotEventContext> _onShot 
+            = new UnityEvent<OnShotEventContext>();
 
-        public void InvokeOnShot(Transform turret) 
-            => _onShot.Invoke(turret);
-        public void AddListenerToOnShot(UnityAction<Transform> listener) 
+        public void InvokeOnShot(OnShotEventContext context) 
+            => _onShot.Invoke(context);
+        public void AddListenerToOnShot(UnityAction<OnShotEventContext> listener) 
             => _onShot.AddListener(listener);
         
-        public void RemoveListenerFromOnShot(UnityAction<Transform> listener) 
+        public void RemoveListenerFromOnShot(UnityAction<OnShotEventContext> listener) 
             => _onShot.RemoveListener(listener);
 
     
     #endregion
-
     
     #region OnTurretChanged
     
@@ -35,5 +34,67 @@ public class PlayerEvents : MonoBehaviour
 
     #endregion
     
+    #region OnBatteryLow
+
+    private readonly UnityEvent _onBatteryLow = new UnityEvent();
+
+    public void InvokeOnBatteryLow() => _onBatteryLow.Invoke();
+    public void AddListenerToOnBatteryLow(UnityAction listener) => _onBatteryLow.AddListener(listener);
+    public void RemoveListenerFromOnBatteryLow(UnityAction listener) => _onBatteryLow.RemoveListener(listener);
+
+    #endregion
+
+    #region OnBatteryRecovered
+
+    private readonly UnityEvent _onBatteryRecovered = new UnityEvent();
+
+    public void InvokeOnBatteryRecovered() => _onBatteryRecovered.Invoke();
+    public void AddListenerToOnBatteryRecovered(UnityAction listener) => _onBatteryRecovered.AddListener(listener);
+    public void RemoveListenerFromOnBatteryRecovered(UnityAction listener) => _onBatteryRecovered.RemoveListener(listener);
+
+    #endregion
+
+    #region OnBatteryEmpty
+
+    private readonly UnityEvent _onBatteryEmpty = new UnityEvent();
+
+    public void InvokeOnBatteryEmpty() => _onBatteryEmpty.Invoke();
+    public void AddListenerToOnBatteryEmpty(UnityAction listener) => _onBatteryEmpty.AddListener(listener);
+    public void RemoveListenerFromOnBatteryEmpty(UnityAction listener) => _onBatteryEmpty.RemoveListener(listener);
+
+    #endregion
     
+    #region OnBatteryChargePercentChanged
+
+    private readonly UnityEvent<int> _onBatteryChargePercentChanged = 
+        new UnityEvent<int>();
+
+    public void InvokeOnBatteryChargePercentChanged(int percent)
+    {
+        _onBatteryChargePercentChanged.Invoke(percent);
+    }
+
+    public void AddListenerToOnBatteryChargePercentChanged(
+        UnityAction<int> listener)
+    {
+        _onBatteryChargePercentChanged.AddListener(listener);
+    }
+
+    public void RemoveListenerFromOnBatteryChargePercentChanged(
+        UnityAction<int> listener)
+    {
+        _onBatteryChargePercentChanged.RemoveListener(listener);
+    }
+
+    #endregion
+
+    #region OnBMenuToggle
+
+    private readonly UnityEvent _onBMenuToggle = new UnityEvent();
+
+    public void InvokeOnBMenuToggle() => _onBMenuToggle.Invoke();
+    public void AddListenerToOnBMenuToggle(UnityAction listener) => _onBMenuToggle.AddListener(listener);
+    public void RemoveListenerFromOnBMenuToggle(UnityAction listener) => _onBMenuToggle.RemoveListener(listener);
+
+    #endregion
 }

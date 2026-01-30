@@ -1,7 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(DifferentialDriveMotor))]
-[RequireComponent(typeof(DifferentialDriveStats))]
 public class PlayerDrive : MonoBehaviour
 {
     [SerializeField] private MonoBehaviour _inputSourceBehaviour;
@@ -15,11 +13,14 @@ public class PlayerDrive : MonoBehaviour
 
     private DriveInput _cachedInput;
 
+    public void Init(
+        DifferentialDriveMotor motor, DifferentialDriveStats stats)
+    {
+        _motor = motor;
+        _stats = stats;
+    }
     private void Awake()
     {
-        _motor = GetComponent<DifferentialDriveMotor>();
-        _stats = GetComponent<DifferentialDriveStats>();
-
         _inputSource = _inputSourceBehaviour as IDriveInputSource;
     }
 
