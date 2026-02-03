@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public sealed class BMenuInput : MonoBehaviour
+public class BMenuInput : MonoBehaviour
 {
     private Text _text;
 

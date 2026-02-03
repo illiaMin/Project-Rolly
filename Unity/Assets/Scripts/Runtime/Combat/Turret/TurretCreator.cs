@@ -11,7 +11,7 @@ public class TurretCreator : MonoBehaviour
     GameObject _projectilePrefab;
     
     [SerializeField] private float _distance = 0.6f;
-    public Turret Init(TurretCreatorContext tcc, ModuleName name)
+    public void Init(TurretCreatorContext tcc)
     {
         _allModules = tcc.AllModules;
         _prefab = tcc.Prefab;
@@ -19,8 +19,6 @@ public class TurretCreator : MonoBehaviour
         _aimTarget = tcc.AimTarget;
         _projectilesPool = tcc.ProjectilesPool;
         _projectilePrefab =  tcc.ProjectilePrefab;
-        
-        return CreateTurret(name);
     }
 
     public Turret CreateTurret(ModuleName turretName)

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class KeyboardBMenuInput : MonoBehaviour
+public class KeyboardBMenuInput : MonoBehaviour
 {
     private PlayerEvents _playerEvents;
 

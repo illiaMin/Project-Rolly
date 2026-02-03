@@ -38,10 +38,8 @@ public class PlayerCompositionRoot : MonoBehaviour
     
     private void Awake()
     {
-        InputContext inputContext 
-            = new InputContext(_playerEvents, _camera, _target);
+        InputContext inputContext = CreateInputContext();
         _inputModule.Init(inputContext);
-        
         
         _modulesCreator.Init(_progressRepository, _allModules);
 
@@ -62,7 +60,6 @@ public class PlayerCompositionRoot : MonoBehaviour
         _playerEvents.AddListenerToOnShot(
             context => battery.ConsumeCharge(context.EnergyPerShot));
         
-       
         
         BMenuCreatorContext bmcc = CreateBMenuContext();
         BMenu bMenu = _modulesCreator.CreateBMenu(_bMenuCreator, bmcc);
@@ -77,6 +74,16 @@ public class PlayerCompositionRoot : MonoBehaviour
             CreateVisionModule(_visionModuleCreator, vc);
     }
 
+    InputContext CreateInputContext()
+    {
+        InputContext ic = 
+            new InputContext(
+                _playerEvents, 
+                _camera, 
+                _target);
+        return ic;
+    }
+    
     TurretCreatorContext CreateTurretContext()
     {
         TurretCreatorContext tc 

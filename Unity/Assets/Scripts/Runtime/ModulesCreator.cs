@@ -15,7 +15,8 @@ public class ModulesCreator : MonoBehaviour
         TurretCreator turretCreator, TurretCreatorContext tc)
     {
         ModuleName turretName = _repository.GetMainGunModuleName();
-        return turretCreator.Init(tc, turretName);
+        turretCreator.Init(tc);
+        return turretCreator.CreateTurret(turretName);
     }
     
     public Wheels CreateWheels(
