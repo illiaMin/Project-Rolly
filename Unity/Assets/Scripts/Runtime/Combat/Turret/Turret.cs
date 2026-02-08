@@ -9,7 +9,13 @@ public class Turret : MonoBehaviour, IDamageable
     private float _timeBeforeNextShot = 0;
     private int _energyPerShot;
 
+    [SerializeField] SpriteRenderer _spriteRendererTurret;
+    [SerializeField] SpriteRenderer _spriteRendererGun;
+    public Transform GetGun() => _spriteRendererGun.transform;
     public bool CanShot { get; private set; } = true;
+    
+    public SpriteRenderer GetSpriteRendererTurret() => _spriteRendererTurret;
+    public SpriteRenderer GetSpriteRendererGun() => _spriteRendererGun;
     public void SetCanShot(bool canShot) => CanShot = canShot;
 
     public void Initialize(SO_PlayerTurret info, PlayerEvents playerEvents)

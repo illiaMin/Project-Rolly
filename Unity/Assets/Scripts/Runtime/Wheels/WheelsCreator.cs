@@ -40,9 +40,12 @@ public class WheelsCreator : MonoBehaviour
         wheels.name = "Wheels";
         wheels.Init(info, _robotBody, _playerDrive);
         wheels.transform.localPosition = Vector3.zero;
+
+        SpriteRenderer side
+            = wheels.GetLeftSide();
+        side.sprite = info.LeftSide;
         
-        var spriteRenderer 
-            = wheels.GetComponentInChildren<SpriteRenderer>();
-        spriteRenderer.sprite = info.Sprite;
+        side = wheels.GetRightSide();
+        side.sprite = info.RightSide;
     }
 }

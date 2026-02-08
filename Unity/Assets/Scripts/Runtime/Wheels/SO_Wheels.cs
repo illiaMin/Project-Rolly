@@ -9,5 +9,6 @@ public class SO_Wheels : ScriptableObject
     
     public HP HP;
     
-    public Sprite Sprite;
+    public Sprite LeftSide;
+    public Sprite RightSide;
 }

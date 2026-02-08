@@ -50,14 +50,20 @@ public class TurretCreator : MonoBehaviour
         turret.name = "Turret";
         turret.Initialize(info, _playerEvents);
         turret.transform.localPosition = Vector3.zero;
+
+        SpriteRenderer renderer
+            = turret.GetSpriteRendererTurret();
+        renderer.sprite = info.SpriteTurret;
         
-        var spriteRenderer 
-            = turret.GetComponentInChildren<SpriteRenderer>();
-        spriteRenderer.sprite = info.Sprite;
+        renderer = turret.GetSpriteRendererGun();
+        renderer.sprite = info.SpriteGun;
     }
     void InitializeTurretAim(Turret turret, SO_PlayerTurret info)
     {
-        turret.GetComponent<TurretAim>().Init(_aimTarget, info.TurnSpeedDegreesPerSecond);
+        TurretAim tAim = 
+            turret.GetComponent<TurretAim>();
+            tAim.Init(_aimTarget, info.TurnSpeedDegreesPerSecond, turret.GetGun());
+            
     }
     void CreateAttacker(SO_PlayerTurret info, out Attacker attacker)
     {

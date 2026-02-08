@@ -4,10 +4,15 @@ public sealed class Wheels : MonoBehaviour, IDamageable
 {
     [SerializeField] private DifferentialDriveMotor _motor;
     [SerializeField] private DifferentialDriveStats _stats;
-
+    
+    [SerializeField] private SpriteRenderer _spriteRendererLeftSide;
+    [SerializeField] private SpriteRenderer _spriteRendererRightSide;
+    
     private HP _leftHp;
     private HP _rightHp;
 
+    public SpriteRenderer GetLeftSide() => _spriteRendererLeftSide;
+    public SpriteRenderer GetRightSide() => _spriteRendererRightSide;
     public void Init(SO_Wheels info, Transform body, PlayerDrive playerDrive)
     {
         int sideMaxHp = info.HP.Max;

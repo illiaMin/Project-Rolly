@@ -5,7 +5,8 @@ public class SO_PlayerTurret : ScriptableObject
 {
     public float TurnSpeedDegreesPerSecond;
     public SO_Projectile ProjectileInfo;
-    public Sprite Sprite;
+    public Sprite SpriteTurret;
+    public Sprite SpriteGun;
     public float ReloadTime = 0;
     public Attacker Attacker;
 
