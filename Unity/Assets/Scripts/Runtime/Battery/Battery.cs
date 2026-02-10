@@ -52,7 +52,9 @@ public sealed class Battery : MonoBehaviour, IDamageable
         int percent = ChargePercent;
 
         bool emptyNow = _currentCharge == 0;
-        bool lowNow = !emptyNow && percent <= LOW_BATTERY_PERCENT;
+        
+        bool lowNow = !emptyNow && percent < LOW_BATTERY_PERCENT;
+        
         if (emptyNow && !_isEmpty)
         {
             _isEmpty = true;

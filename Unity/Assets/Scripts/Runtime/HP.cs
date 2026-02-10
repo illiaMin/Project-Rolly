@@ -1,9 +1,11 @@
+using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
-[System.Serializable]
-public sealed class HP
+[Serializable]
+public struct HP
 {
-    public int Max { get; private set; }
+    public int Max;
     public int Current { get; private set; }
 
     public int Percent
