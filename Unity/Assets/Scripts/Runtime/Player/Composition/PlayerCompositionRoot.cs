@@ -18,8 +18,10 @@ public class PlayerCompositionRoot : MonoBehaviour
     
     [SerializeField] ModulesCreator _modulesCreator;
     [SerializeField] SO_AllModules _allModules;
+    
     [SerializeField] ProgressRepository _progressRepository;
-
+    [SerializeField] SavingSystem _savingSystem;
+    
     [SerializeField] Wheels _prefabWheels;
     [SerializeField] PlayerDrive _playerDrive;
     [SerializeField] WheelsCreator _wheelsCreator;
@@ -41,8 +43,7 @@ public class PlayerCompositionRoot : MonoBehaviour
         InputContext inputContext = CreateInputContext();
         _inputModule.Init(inputContext);
         
-        _modulesCreator.Init(_progressRepository, _allModules);
-
+        _modulesCreator.Init(_progressRepository, _allModules, _savingSystem);
         
         TurretCreatorContext tc = CreateTurretContext();
         Turret turret = _modulesCreator.

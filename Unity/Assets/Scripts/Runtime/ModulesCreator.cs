@@ -5,10 +5,14 @@ public class ModulesCreator : MonoBehaviour
 {
     private ProgressRepository _repository;
     private SO_AllModules _allModules;
-    public void Init(ProgressRepository progressRepository, SO_AllModules allModules)
+    public void Init(
+        ProgressRepository progressRepository, 
+        SO_AllModules allModules,  
+        SavingSystem savingSystem)
     {
         _repository = progressRepository;
         _allModules = allModules;
+        _repository.Init(savingSystem);
     }
     
     public Turret CreateMainTurret(
@@ -29,7 +33,9 @@ public class ModulesCreator : MonoBehaviour
     public Battery CreateBattery(
         BatteryCreator batteryCreator, BatteryCreatorContext bcc)
     {
-        ModuleName batteryName = _repository.GetBatteryModuleName();
+        ModuleName batteryName = ModuleName.Battery;
+        _repository.GetBatteryModuleInfo(out int charge);
+        bcc.SetCharge(charge);
         Battery battery = batteryCreator.Init(bcc, batteryName);
         return battery;
     }

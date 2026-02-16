@@ -46,11 +46,14 @@ public class PlayerEvents : MonoBehaviour
 
     #region OnBatteryRecovered
 
-    private readonly UnityEvent _onBatteryRecovered = new UnityEvent();
+    private readonly UnityEvent<int> _onBatteryRecovered = new UnityEvent<int>();
 
-    public void InvokeOnBatteryRecovered() => _onBatteryRecovered.Invoke();
-    public void AddListenerToOnBatteryRecovered(UnityAction listener) => _onBatteryRecovered.AddListener(listener);
-    public void RemoveListenerFromOnBatteryRecovered(UnityAction listener) => _onBatteryRecovered.RemoveListener(listener);
+    public void InvokeOnBatteryRecovered(int currentPercent) =>
+        _onBatteryRecovered.Invoke(currentPercent);
+    public void AddListenerToOnBatteryRecovered(UnityAction<int> listener) =>
+        _onBatteryRecovered.AddListener(listener);
+    public void RemoveListenerFromOnBatteryRecovered(UnityAction<int> listener) =>
+        _onBatteryRecovered.RemoveListener(listener);
 
     #endregion
 
@@ -73,7 +76,6 @@ public class PlayerEvents : MonoBehaviour
     {
         _onBatteryChargePercentChanged.Invoke(percent);
     }
-
     public void AddListenerToOnBatteryChargePercentChanged(
         UnityAction<int> listener)
     {

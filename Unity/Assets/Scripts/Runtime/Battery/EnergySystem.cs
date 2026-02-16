@@ -19,7 +19,7 @@ public class EnergySystem : MonoBehaviour
         _turret.SetCanShot(false);
     }
 
-    private void OnBatteryRecovered()
+    private void OnBatteryRecovered(int i)
     {
         _turret.SetCanShot(true);
     }

@@ -23,14 +23,14 @@ public sealed class Battery : MonoBehaviour, IDamageable
         }
     }
 
-    public void Init(SO_Battery info, PlayerEvents playerEvents)
+    public void Init(SO_Battery info, BatteryCreatorContext bcc)
     {
-        _playerEvents = playerEvents;
+        _playerEvents = bcc.PlayerEvents;
 
         Hp = new HP(info.MaxHP);
 
         _maxCharge = Mathf.Max(info.MaxCharge, 0);
-        _currentCharge = _maxCharge;
+        _currentCharge = bcc.Charge;
 
         EvaluateThresholds();
     }
@@ -66,12 +66,11 @@ public sealed class Battery : MonoBehaviour, IDamageable
         {
             _isLow = true;
             _playerEvents.InvokeOnBatteryLow();
-            return;
         }
         if (!lowNow && _isLow)
         {
             _isLow = false;
-            _playerEvents.InvokeOnBatteryRecovered();
+            _playerEvents.InvokeOnBatteryRecovered(percent);
         }
         
         _playerEvents.InvokeOnBatteryChargePercentChanged(ChargePercent);

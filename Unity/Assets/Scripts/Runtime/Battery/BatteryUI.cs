@@ -20,9 +20,9 @@ public sealed class BatteryUI : MonoBehaviour
         if (_percentText != null)
             _percentText.text = "Battery charge is " + percent + "%";
     }
-    private void OnBatteryRecovered()
+    private void OnBatteryRecovered(int percent)
     {
-
+        UpdateUI(percent);
     }
     private void OnDestroy()
     {

@@ -6,6 +6,7 @@ public class BatteryCreatorContext
     public readonly Battery PrefabBattery;
     public readonly SO_AllModules AllModules;
     public readonly PlayerEvents PlayerEvents;
+    public int Charge;
     
     public BatteryCreatorContext(
         SO_AllModules allModules,
@@ -18,4 +19,5 @@ public class BatteryCreatorContext
         PrefabBattery = prefabBattery;
         PlayerEvents = playerEvents;
     }
+    public void SetCharge(int charge) => Charge = charge;
 }
