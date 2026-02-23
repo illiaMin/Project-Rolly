@@ -8,16 +8,13 @@ public class ProgressRepository : MonoBehaviour
     public void Init(SavingSystem ss)
     {
         _savingSystem = ss;
-        _savingSystem.Init();
     }
     public ModuleName GetMainGunModuleName()
     {
         if (PlayerPrefs.HasKey(nameof(KeysForPlayerPrefs.MainGun)))
         {
-            string s = PlayerPrefs.GetString(nameof(KeysForPlayerPrefs.MainGun));
-            ModuleName r =
-                (ModuleName)Enum.Parse(typeof(ModuleName), s, true);
-            return r;
+            var ps = _savingSystem.GetPlayerSetup();
+            return Enum.Parse<ModuleName>(ps.GetCurrentMainGunName());
         }
 
         return ModuleName.Rifle;
@@ -26,10 +23,8 @@ public class ProgressRepository : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(nameof(KeysForPlayerPrefs.SecondGun)))
         {
-            string s = PlayerPrefs.GetString(nameof(KeysForPlayerPrefs.SecondGun));
-            ModuleName r =
-                (ModuleName)Enum.Parse(typeof(ModuleName), s, true);
-            return r;
+            var ps = _savingSystem.GetPlayerSetup();
+            return Enum.Parse<ModuleName>(ps.GetCurrentSecondGunName());
         }
 
         return ModuleName.Rifle;
@@ -38,12 +33,9 @@ public class ProgressRepository : MonoBehaviour
     {
         if (PlayerPrefs.HasKey(nameof(KeysForPlayerPrefs.ActiveWheels)))
         {
-            string s = PlayerPrefs.GetString(nameof(KeysForPlayerPrefs.ActiveWheels));
-            ModuleName r =
-                (ModuleName)Enum.Parse(typeof(ModuleName), s, true);
-            return r;
+            var ps = _savingSystem.GetPlayerSetup();
+            return Enum.Parse<ModuleName>(ps.GetCurrentActiveWheels());
         }
-        
         return ModuleName.Tracks;
     } 
     public void GetBatteryModuleInfo(out int charge)
@@ -51,6 +43,26 @@ public class ProgressRepository : MonoBehaviour
         PlayerSetup ps = _savingSystem.GetPlayerSetup();
         charge = ps.GetInstalledBatteryCharge();
     }
+
+    public ModuleName GetCurrentAuxiliaryName()
+    {
+        if (PlayerPrefs.HasKey(nameof(KeysForPlayerPrefs.Auxiliary)))
+        {
+            var ps = _savingSystem.GetPlayerSetup();
+            return Enum.Parse<ModuleName>(ps.GetCurrentAuxiliaryModuleName());
+        }
+        return ModuleName.Shield;
+    }
     public ModuleName GetBMenuModuleName() => ModuleName.B_menu;
     public ModuleName GetVisionModuleName() => ModuleName.Vision;
+    
+    public ModuleName GetIDCardModuleName()
+    {
+        if (PlayerPrefs.HasKey(nameof(KeysForPlayerPrefs.IDCard)))
+        {
+            var ps = _savingSystem.GetPlayerSetup();
+            return Enum.Parse<ModuleName>(ps.GetCurrentIDCard());
+        }
+        return ModuleName.IdCardRolly;
+    } 
 }

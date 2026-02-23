@@ -4,6 +4,8 @@ public enum KeysForPlayerPrefs
 {
     MainGun,
     SecondGun,
+    Auxiliary,
     ActiveWheels,
-    Battery
+    Battery,
+    IDCard
 }

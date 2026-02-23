@@ -5,7 +5,8 @@ using UnityEngine;
 public class SavingModuleInfo
 {
     [SerializeField] private ModuleName _moduleName;
-    [SerializeField] String _keyName;
+    [SerializeField] TypeOfModule _typeOfModule;
+    [SerializeField] string _keyName;
     [SerializeField] [Range(0, 1)] int _playerHas;
     [SerializeField] [Range(0, 1)] int _playerUnlocked;
     [SerializeField] [Range(0, 100)] int _currentHp = 100;
@@ -16,9 +17,16 @@ public class SavingModuleInfo
     [SerializeField] int _charge;
 
     public string GetKey() => _keyName;
-
+    public TypeOfModule GetTypeOfModule() => _typeOfModule;
+    public bool IsUnlocked() => _playerUnlocked == 1;
+    public ModuleName GetModuleName() => _moduleName;
+    
+    
+    
     public void GetValues(
+        out ModuleName moduleName,
         out int playerHas,
+        out TypeOfModule typeOfModule,
         out int playerUnlocked,
         out int currentHp,
         out int hasTwoHp,
@@ -27,7 +35,9 @@ public class SavingModuleInfo
         out int hasCharge,
         out int charge)
     {
+        moduleName = _moduleName;
         playerHas = _playerHas;
+        typeOfModule = _typeOfModule;
         playerUnlocked = _playerUnlocked;
         currentHp = _currentHp;
         hasTwoHp = _hasTwoHp;
@@ -36,9 +46,11 @@ public class SavingModuleInfo
         hasCharge = _hasCharge;
         charge = _charge;
     }
-    public void SetKeyName(String keyName) => _keyName = keyName;
+    public void SetKeyName(string keyName) => _keyName = keyName;
     public void SetValues(
+        ModuleName moduleName,
         int playerHas,
+        TypeOfModule typeOfModule,
         int playerUnlocked,
         int currentHp,
         int hasTwoHp,
@@ -47,12 +59,14 @@ public class SavingModuleInfo
         int hasCharge,
         int charge)
     {
+        _moduleName = moduleName;
         _playerHas = playerHas;
+        _typeOfModule = typeOfModule;
         _playerUnlocked = playerUnlocked;
         _currentHp = currentHp;
         _hasTwoHp = hasTwoHp;
         _currentRightHp = currentRightHp;
-        _currentLeftHp = _currentLeftHp;
+        _currentLeftHp = currentLeftHp;
         _hasCharge = hasCharge;
         _charge = charge;
     }
