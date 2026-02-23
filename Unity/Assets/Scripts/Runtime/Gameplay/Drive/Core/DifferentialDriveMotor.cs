@@ -7,6 +7,8 @@ public class DifferentialDriveMotor : MonoBehaviour
     [SerializeField] private float _speedBack = 1f;
     [SerializeField] private float _turnSpeed = 300f;
 
+    private Vector2 _appliedVelocity =  Vector2.zero;
+    private float _angularVelocity = 0;
     private Rigidbody2D _rb;
 
     public void SetSpeedForward(
@@ -19,6 +21,8 @@ public class DifferentialDriveMotor : MonoBehaviour
 
     public void Apply(DriveInput input, float leftFactor, float rightFactor)
     {
+        Stop();
+        
         float forwardPower = leftFactor + rightFactor;
         float diff = rightFactor - leftFactor;
 
@@ -33,13 +37,16 @@ public class DifferentialDriveMotor : MonoBehaviour
         }
         float angular = (_turnSpeed * diff * input.Throttle) + (_turnSpeed * input.Turn);
 
-        _rb.linearVelocity = velocity;
-        _rb.angularVelocity = angular;
+        _appliedVelocity = velocity;
+        _angularVelocity = angular;
+        
+        _rb.linearVelocity += _appliedVelocity;
+        _rb.angularVelocity += _angularVelocity;
     }
 
     public void Stop()
     {
-        _rb.linearVelocity = Vector2.zero;
-        _rb.angularVelocity = 0f;
+        _appliedVelocity = Vector2.zero;
+        _angularVelocity = 0f;
     }
 }

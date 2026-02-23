@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
-    private float _speed = 0f;
     private float _lifeTime = 0f;
     private SO_Damage _damage;
     private float _timeLeft = 0f;

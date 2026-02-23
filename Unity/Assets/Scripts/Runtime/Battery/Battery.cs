@@ -55,6 +55,7 @@ public sealed class Battery : MonoBehaviour, IDamageable
         
         bool lowNow = !emptyNow && percent < LOW_BATTERY_PERCENT;
         
+        
         if (emptyNow && !_isEmpty)
         {
             _isEmpty = true;
@@ -62,7 +63,7 @@ public sealed class Battery : MonoBehaviour, IDamageable
             _playerEvents.InvokeOnBatteryEmpty();
             return;
         }
-        if (lowNow && !_isLow)
+        if (lowNow)
         {
             _isLow = true;
             _playerEvents.InvokeOnBatteryLow();

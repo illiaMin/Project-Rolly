@@ -28,7 +28,8 @@ public class VisionModule : MonoBehaviour, IDamageable
             {
                 VisionModuleCondition.NotBrocken => _info.StateMask1,
                 VisionModuleCondition.BrokenLittleBit => _info.StateMask2,
-                VisionModuleCondition.AlmostComplitelyBroken => _info.StateMask3
+                VisionModuleCondition.AlmostComplitelyBroken => _info.StateMask3,
+                _ => null
             };
             _maskImage.sprite = sprite;
         }

@@ -9,6 +9,7 @@ public class TurretCreator : MonoBehaviour
     Transform _aimTarget;
     ProjectilesPool  _projectilesPool;
     GameObject _projectilePrefab;
+    Turret _turret; 
     
     [SerializeField] private float _distance = 0.6f;
     public void Init(TurretCreatorContext tcc)
@@ -21,10 +22,16 @@ public class TurretCreator : MonoBehaviour
         _projectilePrefab =  tcc.ProjectilePrefab;
     }
 
+    public void InitializeNewTurret(ModuleName moduleName)
+    {
+        Destroy(_turret.gameObject);
+        _turret = CreateTurret(moduleName);
+    }
     public Turret CreateTurret(ModuleName turretName)
     {
         GetInfoAboutTurret(turretName, out SO_PlayerTurret info);
         CreateTurret(out Turret turret);
+        _turret = turret;
         Setup(turret, info);
 
         InitializeTurretAim(turret, info);
@@ -34,6 +41,7 @@ public class TurretCreator : MonoBehaviour
         
         _playerEvents.InvokeOnTurretChanged(turret);
         
+        _turret = turret;
         return turret;
     }
     void GetInfoAboutTurret(ModuleName turretName, out SO_PlayerTurret info)
@@ -67,7 +75,7 @@ public class TurretCreator : MonoBehaviour
     }
     void CreateAttacker(SO_PlayerTurret info, out Attacker attacker)
     {
-        attacker = Instantiate(info.Attacker, transform, false);
+        attacker = Instantiate(info.Attacker, _turret.transform, false);
     }
     void InitAttacker(Attacker attacker, SO_PlayerTurret info)
     {

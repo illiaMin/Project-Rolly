@@ -5,14 +5,19 @@ public class ModulesCreator : MonoBehaviour
 {
     private ProgressRepository _repository;
     private SO_AllModules _allModules;
+    private AuxiliaryModule _currentAuxiliaryModule;
     public void Init(
-        ProgressRepository progressRepository, 
-        SO_AllModules allModules,  
+        SO_AllModules allModules,
+        ProgressRepository progressRepository,
         SavingSystem savingSystem)
     {
-        _repository = progressRepository;
         _allModules = allModules;
+        _repository = progressRepository;
         _repository.Init(savingSystem);
+    }
+    public SavingSystem InitSavingSystem(SavingSystem savingSystem)
+    {
+        return savingSystem.Init();
     }
     
     public Turret CreateMainTurret(
@@ -42,12 +47,33 @@ public class ModulesCreator : MonoBehaviour
 
     public BMenu CreateBMenu(BMenuCreator creator, BMenuCreatorContext bcc)
     {
-        return creator.Create(bcc);
+        ModuleName bMenuName = _repository.GetBMenuModuleName();
+        return creator.Create(bcc, bMenuName);
     }
     public void CreateVisionModule(VisionModuleCreator visionModuleCreator, VisionModuleCreatorContext vc)
     {
         ModuleName visionModuleName = _repository.GetVisionModuleName();
         visionModuleCreator.Init(vc, visionModuleName);
-        
+    }
+
+    public Dash CreateDash(DashCreator dashCreator, DashCreatorContext dcc)
+    {
+        return dashCreator.Create(dcc);
+    }
+
+    public Shield CreateShield(ShieldCreator shieldCreator, ShieldCreatorContext scc)
+    {
+        return shieldCreator.Create(scc);
+    }
+
+    public MiniMap CreateMiniMap(MiniMapCreator minimapCreator, MinimapCreatorConrext mmcc)
+    {
+        return minimapCreator.Create(mmcc);
+    }
+
+    public ID_Card CreateIDCard(ID_CardCreator idCardCreator, ID_CardCreatorContext idcc)
+    {
+        ModuleName name = _repository.GetIDCardModuleName();
+        return idCardCreator.Create(idcc, name);
     }
 }

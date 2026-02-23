@@ -6,7 +6,12 @@ public class WheelsCreator : MonoBehaviour
     Wheels _prefabWheels;
     PlayerDrive _playerDrive;
     SO_AllModules _allModules;
-
+    Wheels _wheels;
+    public void InitializeNewWheels(ModuleName moduleName)
+    {
+        Destroy(_wheels.gameObject);
+        _wheels = CreateModule(moduleName);
+    }
     public Wheels Init(WheelsCreatorContext wcc, ModuleName wheelsName)
     {
         _robotBody = wcc.RobotBody;
@@ -22,6 +27,7 @@ public class WheelsCreator : MonoBehaviour
     {
         GetInfoAboutWheels(wheelsName, out SO_Wheels info);
         Wheels wheels = CreateWheels();
+        _wheels = wheels;
         Setup(wheels, info);
         return wheels;
     }
