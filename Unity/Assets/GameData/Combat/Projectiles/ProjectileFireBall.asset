@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e30241337e4fdd343b9f4236a5d4ad1b, type: 3}
+  m_Name: ProjectileFireBall
+  m_EditorClassIdentifier: 
+  Damage: {fileID: 11400000, guid: 8a3455c82b347554db894d36d68c518e, type: 2}
+  Speed: 30
+  LifeTime: 0.5
+  Sprite: {fileID: -2850767913887736697, guid: 2662a305163010844b944b3a69da6443, type: 3}

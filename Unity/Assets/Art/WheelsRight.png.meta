@@ -1,10 +1,13 @@
 fileFormatVersion: 2
-guid: 9b0e559e67b220a40b8c68a4a75863f6
+guid: 0c8c984ffb5a5f34fba46e6d7590262c
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3211953392425349859
-    second: spriteTestEarth_0
+      213: -492939083633216143
+    second: WheelsRight_0
+  - first:
+      213: -252488904675283412
+    second: WheelsRight_1
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +129,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spriteTestEarth_0
+      name: WheelsRight_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 51
-        height: 51
+        x: 43
+        y: 32
+        width: 8
+        height: 17
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +144,30 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1d40614869dc63d0800000000000000
-      internalID: -3211953392425349859
+      spriteID: 175b220e38ab829f0800000000000000
+      internalID: -492939083633216143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: WheelsRight_1
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 2
+        width: 8
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c2e2a1fcdaafe7cf0800000000000000
+      internalID: -252488904675283412
       vertices: []
       indices: 
       edges: []
@@ -161,7 +186,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      spriteTestEarth_0: -3211953392425349859
+      WheelsRight_0: -492939083633216143
+      WheelsRight_1: -252488904675283412
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

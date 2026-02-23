@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 9b0e559e67b220a40b8c68a4a75863f6
+guid: 1b3a6d5bc59abfb489cbc7e14e072b0a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3211953392425349859
-    second: spriteTestEarth_0
+      213: 3880652643429304382
+    second: FireThrower_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +126,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spriteTestEarth_0
+      name: FireThrower_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 51
-        height: 51
+        x: 18
+        y: 39
+        width: 15
+        height: 12
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1d40614869dc63d0800000000000000
-      internalID: -3211953392425349859
+      spriteID: e38c844c409dad530800000000000000
+      internalID: 3880652643429304382
       vertices: []
       indices: 
       edges: []
@@ -161,7 +161,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      spriteTestEarth_0: -3211953392425349859
+      FireThrower_0: 3880652643429304382
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

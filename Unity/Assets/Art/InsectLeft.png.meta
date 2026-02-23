@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 9b0e559e67b220a40b8c68a4a75863f6
+guid: d2e8a132251e4ec46a9bc123ee0072e7
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3211953392425349859
-    second: spriteTestEarth_0
+      213: 3157140678111831931
+    second: InsectLeft_0
+  - first:
+      213: -5678053187267366126
+    second: InsectLeft_1
+  - first:
+      213: -8440824436705327005
+    second: InsectLeft_2
+  - first:
+      213: -7550710432807396255
+    second: InsectLeft_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +135,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spriteTestEarth_0
+      name: InsectLeft_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 51
-        height: 51
+        x: 2
+        y: 40
+        width: 6
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +150,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1d40614869dc63d0800000000000000
-      internalID: -3211953392425349859
+      spriteID: b77aac038ba60db20800000000000000
+      internalID: 3157140678111831931
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InsectLeft_1
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 26
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2137725b5b08331b0800000000000000
+      internalID: -5678053187267366126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InsectLeft_2
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 14
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3680ebe65ea2cda80800000000000000
+      internalID: -8440824436705327005
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InsectLeft_3
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 16cdda2eddc763790800000000000000
+      internalID: -7550710432807396255
       vertices: []
       indices: 
       edges: []
@@ -161,7 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      spriteTestEarth_0: -3211953392425349859
+      InsectLeft_0: 3157140678111831931
+      InsectLeft_1: -5678053187267366126
+      InsectLeft_2: -8440824436705327005
+      InsectLeft_3: -7550710432807396255
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

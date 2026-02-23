@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: 9b0e559e67b220a40b8c68a4a75863f6
+guid: 9f5a631eea1db9f49881ad923c7ec2bc
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -3211953392425349859
-    second: spriteTestEarth_0
+      213: -5942188735643153607
+    second: InsectRight_0
+  - first:
+      213: 5813677073565765520
+    second: InsectRight_1
+  - first:
+      213: -5395515852304806294
+    second: InsectRight_2
+  - first:
+      213: -3679602749562141991
+    second: InsectRight_3
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -126,13 +135,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spriteTestEarth_0
+      name: InsectRight_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 51
-        height: 51
+        x: 43
+        y: 40
+        width: 6
+        height: 9
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,8 +150,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: d1d40614869dc63d0800000000000000
-      internalID: -3211953392425349859
+      spriteID: 93b89a7f3da198da0800000000000000
+      internalID: -5942188735643153607
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InsectRight_1
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 26
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 09f48b80f745ea050800000000000000
+      internalID: 5813677073565765520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InsectRight_2
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 14
+        width: 6
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a6e02634be64f15b0800000000000000
+      internalID: -5395515852304806294
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: InsectRight_3
+      rect:
+        serializedVersion: 2
+        x: 43
+        y: 0
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9d24ccd6bcc6fecc0800000000000000
+      internalID: -3679602749562141991
       vertices: []
       indices: 
       edges: []
@@ -161,7 +236,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      spriteTestEarth_0: -3211953392425349859
+      InsectRight_0: -5942188735643153607
+      InsectRight_1: 5813677073565765520
+      InsectRight_2: -5395515852304806294
+      InsectRight_3: -3679602749562141991
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
