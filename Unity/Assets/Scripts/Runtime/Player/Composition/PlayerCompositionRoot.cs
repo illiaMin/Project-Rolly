@@ -57,6 +57,11 @@ public class PlayerCompositionRoot : MonoBehaviour
     [SerializeField] ID_CardCreator _iDCardCreator;
     [SerializeField] Text _iDCardText;
     
+    [SerializeField] PlayersHP _playersHP;
+    [SerializeField] HPUIConteineer _hpUI;
+    [SerializeField] HPOwner _hpOwner;
+    private HPSetter _hpSetter;
+    
     private void Awake()
     {
         InputContext inputContext = CreateInputContext();
@@ -67,21 +72,28 @@ public class PlayerCompositionRoot : MonoBehaviour
                 _savingSystem.SaveBatteryCharge);
         
         _modulesCreator.Init(_allModules, _progressRepository, _savingSystem);
+        _hpSetter = new HPSetter(_hpOwner);
         
         TurretCreatorContext tc = CreateTurretContext();
+        _playerEvents.AddListenerToOnTurretChanged(_hpSetter.OnTurretChanged);
         Turret turret = _modulesCreator.
             CreateMainTurret(_turretCreator, tc);
         _playerEvents.AddListenerToOnChangeTurretTo(_turretCreator.InitializeNewTurret);
         
+        
+        _playerEvents.AddListenerToOnWheelsChanged(_hpSetter.OnWheelsChanged);
         WheelsCreatorContext wcc = CreateWheelsContext();
         Wheels wheels = _modulesCreator.
             CreateWheels(_wheelsCreator, wcc);
         _playerEvents.AddListenerToOnChangeWheelsTo(_wheelsCreator.InitializeNewWheels);
 
+        
         _energySystem.Init(turret, _playerEvents);
+        
         
         _batteryUI.Init(_playerEvents);
         
+        _playerEvents.AddListenerToOnBatteryChanged(_hpSetter.OnBatteryChanged);
         BatteryCreatorContext bcc = CreateBatteryContext();
         Battery battery = _modulesCreator.
             CreateBattery(_batteryCreator, bcc);
@@ -89,6 +101,9 @@ public class PlayerCompositionRoot : MonoBehaviour
             context => battery.ConsumeCharge(context.EnergyPerShot));
         
         CreateAuxiliaryModule();
+        //_hpSetter.SetHpToOwner(
+         //   ref _currentAuxiliaryModule.GetHP(), TypeOfDamageble.Auxiliary);
+        _playerEvents.AddListenerToOnAuxiliaryModuleChanged(_hpSetter.OnAuxiliaryChanged);
         _playerEvents.AddListenerToOnChangeAuxiliaryTo(CreateAuxiliaryModule);
         
         BMenuCreatorContext bmcc = CreateBMenuContext();
@@ -99,14 +114,20 @@ public class PlayerCompositionRoot : MonoBehaviour
         _bMenuEvents.AddListenerToOnBMenuUpdateText(bMenuInput.Show);
 
         VisionModuleCreatorContext vc = CreateVisionContext();
-        _modulesCreator.
+        VisionModule visionModule = _modulesCreator.
             CreateVisionModule(_visionModuleCreator, vc);
-
+        _hpSetter.SetHpToOwner(
+            ref visionModule.GetHP(), TypeOfDamageble.Vision);
         
         ID_CardCreatorContext idcc = CreateIDCardCreatorContext();
         ID_Card idCard = _modulesCreator.
             CreateIDCard(_iDCardCreator,  idcc);
         _playerEvents.AddListenerToOnChangeIdCardTo(_iDCardCreator.InitializeNewIdCard);
+
+
+        
+        _playersHP.Init(_savingSystem.GetPlayerSetup(), _hpUI, _hpOwner);
+        _playerEvents.AddListenerToOnDMGRecieved(_playersHP.ShowHPs);
     }
 
     #region Contexts
@@ -128,8 +149,7 @@ public class PlayerCompositionRoot : MonoBehaviour
             = new TurretCreatorContext
             (_allModules, _turretPrefab, 
                 _playerEvents, _target, 
-                _projectilesPool,
-                _projectilePrefab);
+                _projectilesPool, _progressRepository);
         return tc;
     }
     WheelsCreatorContext CreateWheelsContext()
@@ -139,7 +159,9 @@ public class PlayerCompositionRoot : MonoBehaviour
                 _allModules,
                 transform,
                 _prefabWheels,
-                _playerDrive
+                _playerDrive,
+                _playerEvents,
+                _progressRepository
             );
         return wcc;
     }
@@ -160,7 +182,8 @@ public class PlayerCompositionRoot : MonoBehaviour
             _visionModuleMaskImage,
             _prefabVisionModule,
             transform,
-            _allModules);
+            _allModules,
+            _progressRepository);
         return vc;
     }
     BMenuCreatorContext CreateBMenuContext()
@@ -203,6 +226,8 @@ public class PlayerCompositionRoot : MonoBehaviour
     void CreateAuxiliaryModule()
     {
         if (_currentAuxiliaryModule != null) Destroy(_currentAuxiliaryModule.gameObject);
+        
+        
         switch (_progressRepository.GetCurrentAuxiliaryName())
         {
             case ModuleName.Dash:
@@ -222,6 +247,34 @@ public class PlayerCompositionRoot : MonoBehaviour
                 _currentAuxiliaryModule = shield;
                 break;
         }
+        int auxHP = _progressRepository.GetAuxiliaryHP();
+        if (_progressRepository.GetCurrentAuxiliaryName() == ModuleName.Dash)
+        {
+            SO_Dash info =
+                _allModules.Modules.Get(_progressRepository.GetCurrentAuxiliaryName()) as SO_Dash;
+            HP hp = new HP(info.HP);
+            hp.SetCurrent(auxHP);
+            _hpOwner.Add(hp, TypeOfDamageble.Auxiliary);
+        }
+        else if (_progressRepository.GetCurrentAuxiliaryName() == ModuleName.Minimap)
+        {
+            SO_Minimap info =
+                _allModules.Modules.Get(_progressRepository.GetCurrentAuxiliaryName()) as SO_Minimap;
+            HP hp = new HP(info.HP);
+            hp.SetCurrent(auxHP);
+            _hpOwner.Add(hp, TypeOfDamageble.Auxiliary);
+        }
+        else if (_progressRepository.GetCurrentAuxiliaryName() == ModuleName.Shield)
+        {
+            SO_Shield info =
+                _allModules.Modules.Get(_progressRepository.GetCurrentAuxiliaryName()) as SO_Shield;
+            HP hp = new HP(info.HP);
+            hp.SetCurrent(auxHP);
+            _hpOwner.Add(hp, TypeOfDamageble.Auxiliary);
+        }
+           
+        
+        _playerEvents.InvokeOnAuxiliaryModuleChanged(_currentAuxiliaryModule);
     }
     
 }

@@ -3,7 +3,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 [Serializable]
-public struct HP
+public class HP
 {
     public int Max;
     public int Current { get; private set; }
@@ -32,5 +32,10 @@ public struct HP
     {
         int newValue = Current - Mathf.Max(damage, 0);
         Current = Mathf.Clamp(newValue, 0, Max);
+    }
+
+    public void TakeDmg(int damage)
+    {
+        Current = Current - damage < 0 ? 0 : Current - damage;
     }
 }

@@ -38,14 +38,12 @@ public class ProjectilesPool : MonoBehaviour
             projectile.gameObject.SetActive(true);
             return true;
         }
-
         if (_expandIfEmpty)
         {
             projectile = CreateNew();
             projectile.gameObject.SetActive(true);
             return true;
         }
-
         projectile = null;
         return false;
     }

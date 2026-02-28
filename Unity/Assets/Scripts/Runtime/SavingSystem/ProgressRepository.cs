@@ -38,12 +38,6 @@ public class ProgressRepository : MonoBehaviour
         }
         return ModuleName.Tracks;
     } 
-    public void GetBatteryModuleInfo(out int charge)
-    {
-        PlayerSetup ps = _savingSystem.GetPlayerSetup();
-        charge = ps.GetInstalledBatteryCharge();
-    }
-
     public ModuleName GetCurrentAuxiliaryName()
     {
         if (PlayerPrefs.HasKey(nameof(KeysForPlayerPrefs.Auxiliary)))
@@ -55,7 +49,6 @@ public class ProgressRepository : MonoBehaviour
     }
     public ModuleName GetBMenuModuleName() => ModuleName.B_menu;
     public ModuleName GetVisionModuleName() => ModuleName.Vision;
-    
     public ModuleName GetIDCardModuleName()
     {
         if (PlayerPrefs.HasKey(nameof(KeysForPlayerPrefs.IDCard)))
@@ -65,4 +58,42 @@ public class ProgressRepository : MonoBehaviour
         }
         return ModuleName.IdCardRolly;
     } 
+    
+    public void GetBatteryModuleCharge(out int charge)
+    {
+        PlayerSetup ps = _savingSystem.GetPlayerSetup();
+        charge = ps.GetInstalledBatteryCharge();
+    }
+
+    public int GetBatteryHP()
+    {
+        PlayerSetup ps = _savingSystem.GetPlayerSetup();
+        return ps.GetInstalledBatteryHP();
+    }
+    public int GetTurretHP()
+    {
+        PlayerSetup ps = _savingSystem.GetPlayerSetup();
+        return ps.GetInstalledGunHP();
+    }
+    public int GetAuxiliaryHP()
+    {
+        PlayerSetup ps = _savingSystem.GetPlayerSetup();
+        return ps.GetInstalledAuxiliaryHP();
+    }
+    public int GetVisionHP()
+    {
+        PlayerSetup ps = _savingSystem.GetPlayerSetup();
+        return ps.GetInstalledVisionHP();
+    }
+
+    public int GetWheelsLeftHP()
+    {
+        PlayerSetup ps = _savingSystem.GetPlayerSetup();
+        return ps.GetInstalledLeftWheelsHP();
+    }
+    public int GetWheelsRightHP()
+    {
+        PlayerSetup ps = _savingSystem.GetPlayerSetup();
+        return ps.GetInstalledRightWheelsHP();
+    }
 }

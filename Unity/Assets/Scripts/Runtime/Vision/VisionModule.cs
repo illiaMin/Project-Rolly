@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class VisionModule : MonoBehaviour, IDamageable
+public class VisionModule : MonoBehaviour
 {
     SO_VisionModule _info;
     VisionModuleCondition _condition = 
@@ -38,9 +38,13 @@ public class VisionModule : MonoBehaviour, IDamageable
             _maskImage.gameObject.SetActive(false);
         }
     }
-
-    public void TakeDmg(SO_Damage damage)
+    public ref HP GetHP()
     {
-        
+        return ref _hp;
+    }
+
+    public void SetHP(HP hp)
+    {
+        _hp = hp;
     }
 }

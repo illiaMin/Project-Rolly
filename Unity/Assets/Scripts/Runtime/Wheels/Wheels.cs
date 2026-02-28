@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public sealed class Wheels : MonoBehaviour, IDamageable
+public sealed class Wheels : MonoBehaviour
 {
     [SerializeField] private DifferentialDriveMotor _motor;
     [SerializeField] private DifferentialDriveStats _stats;
@@ -15,10 +15,6 @@ public sealed class Wheels : MonoBehaviour, IDamageable
     public SpriteRenderer GetRightSide() => _spriteRendererRightSide;
     public void Init(SO_Wheels info, Transform body, PlayerDrive playerDrive)
     {
-        int sideMaxHp = info.HP.Max;
-        _leftHp = new HP(sideMaxHp);
-        _rightHp = new HP(sideMaxHp);
-
         playerDrive.Init(_motor, _stats);
 
         _motor.SetSpeedForward(info.SpeedForward);
@@ -30,9 +26,23 @@ public sealed class Wheels : MonoBehaviour, IDamageable
 
         _stats.SetHPs(_leftHp.Current, _rightHp.Current);
     }
-
-    public void TakeDmg(SO_Damage damage)
+    
+    public ref HP GetLeftHP()
     {
-        
+        return ref _leftHp;
+    }
+    public ref HP GetRightHP()
+    {
+        return ref _rightHp;
+    }
+
+    public void SetLeftHP(HP newHP)
+    {
+        _leftHp = newHP;
+    }
+
+    public void SetRightHP(HP newHP)
+    {
+        _rightHp = newHP;
     }
 }

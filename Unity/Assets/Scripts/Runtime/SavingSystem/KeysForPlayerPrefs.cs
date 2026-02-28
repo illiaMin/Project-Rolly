@@ -7,5 +7,7 @@ public enum KeysForPlayerPrefs
     Auxiliary,
     ActiveWheels,
     Battery,
-    IDCard
+    IDCard,
+    VisionModule,
+    B_MenuKey
 }

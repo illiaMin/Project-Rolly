@@ -1,13 +1,15 @@
 using System;
 using UnityEngine;
 
-public class Turret : MonoBehaviour, IDamageable
+public class Turret : MonoBehaviour
 {
     bool _readyToFire = false;
-    PlayerEvents _playerEvents;
+    RobotEvents _playerEvents;
     private float _reloadTime = 0;
     private float _timeBeforeNextShot = 0;
     private int _energyPerShot;
+    private HP _hp;
+    TypeOfDamageble _typeOfDamageble = TypeOfDamageble.Gun;
 
     [SerializeField] SpriteRenderer _spriteRendererTurret;
     [SerializeField] SpriteRenderer _spriteRendererGun;
@@ -18,7 +20,7 @@ public class Turret : MonoBehaviour, IDamageable
     public SpriteRenderer GetSpriteRendererGun() => _spriteRendererGun;
     public void SetCanShot(bool canShot) => CanShot = canShot;
 
-    public void Initialize(SO_PlayerTurret info, PlayerEvents playerEvents)
+    public void Initialize(SO_PlayerTurret info, RobotEvents playerEvents)
     {
         _playerEvents = playerEvents;
         _reloadTime = info.ReloadTime;
@@ -50,7 +52,10 @@ public class Turret : MonoBehaviour, IDamageable
 
     private OnShotEventContext CreateContext()
     {
-        return new OnShotEventContext(transform, _energyPerShot);
+        return new 
+            OnShotEventContext(transform, 
+                _energyPerShot, 
+                transform.root.GetComponentInChildren<Collider2D>());
     }
 
     private void ReloadGun()
@@ -59,8 +64,14 @@ public class Turret : MonoBehaviour, IDamageable
         _timeBeforeNextShot = _reloadTime;
     }
 
-    public void TakeDmg(SO_Damage damage)
+    public ref HP GetHP()
     {
-        
+        return ref _hp;
+    }
+    public TypeOfDamageble GetTypeOfDamageble() => _typeOfDamageble;
+
+    public void SetHP(HP newHp)
+    {
+        _hp = newHp;
     }
 }

@@ -1,9 +1,7 @@
 using UnityEngine;
 
-public sealed class Battery : MonoBehaviour, IDamageable
+public sealed class Battery : MonoBehaviour
 {
-    public HP Hp { get; private set; }
-
     private int _maxCharge;
     private int _currentCharge;
 
@@ -13,6 +11,12 @@ public sealed class Battery : MonoBehaviour, IDamageable
     private bool _isEmpty;
 
     private const int LOW_BATTERY_PERCENT = 5;
+    
+    HP _hp;
+    public void SetHp(HP hp)
+    {
+        _hp = hp;
+    }
 
     public int ChargePercent
     {
@@ -27,7 +31,7 @@ public sealed class Battery : MonoBehaviour, IDamageable
     {
         _playerEvents = bcc.PlayerEvents;
 
-        Hp = new HP(info.MaxHP);
+        _hp = new HP(info.MaxHP);
 
         _maxCharge = Mathf.Max(info.MaxCharge, 0);
         _currentCharge = bcc.Charge;
@@ -76,9 +80,9 @@ public sealed class Battery : MonoBehaviour, IDamageable
         
         _playerEvents.InvokeOnBatteryChargePercentChanged(ChargePercent);
     }
-
-    public void TakeDmg(SO_Damage damage)
+    
+    public ref HP GetHP()
     {
-        
+        return ref _hp;
     }
 }

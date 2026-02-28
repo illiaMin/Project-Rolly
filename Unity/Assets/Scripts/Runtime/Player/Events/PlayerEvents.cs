@@ -1,23 +1,8 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class PlayerEvents : MonoBehaviour
+public class PlayerEvents : RobotEvents
 {
-    #region OnShot
-    
-        private readonly UnityEvent<OnShotEventContext> _onShot 
-            = new UnityEvent<OnShotEventContext>();
-
-        public void InvokeOnShot(OnShotEventContext context) 
-            => _onShot.Invoke(context);
-        public void AddListenerToOnShot(UnityAction<OnShotEventContext> listener) 
-            => _onShot.AddListener(listener);
-        
-        public void RemoveListenerFromOnShot(UnityAction<OnShotEventContext> listener) 
-            => _onShot.RemoveListener(listener);
-
-    
-    #endregion
     
     #region OnChangeTurretTo
     
@@ -86,6 +71,51 @@ public class PlayerEvents : MonoBehaviour
         
         public void RemoveListenerFromOnTurretChanged(UnityAction<Turret> listener) 
             => _onTurretChanged.RemoveListener(listener);
+
+    #endregion
+    
+    #region OnWheelsChanged
+    
+    private readonly UnityEvent<Wheels> _onWheelsChanged 
+        = new UnityEvent<Wheels>();
+    
+    public void InvokeOnWheelsChanged(Wheels wheels) 
+        => _onWheelsChanged.Invoke(wheels);
+    public void AddListenerToOnWheelsChanged(UnityAction<Wheels> listener) 
+        => _onWheelsChanged.AddListener(listener);
+        
+    public void RemoveListenerFromOnWheelsChanged(UnityAction<Wheels> listener) 
+        => _onWheelsChanged.RemoveListener(listener);
+
+    #endregion
+    
+    #region OnBatteryChanged
+    
+    private readonly UnityEvent<Battery> _onBatteryChanged 
+        = new UnityEvent<Battery>();
+    
+    public void InvokeOnBatteryChanged(Battery battery) 
+        => _onBatteryChanged.Invoke(battery);
+    public void AddListenerToOnBatteryChanged(UnityAction<Battery> listener) 
+        => _onBatteryChanged.AddListener(listener);
+        
+    public void RemoveListenerFromOnBatteryChanged(UnityAction<Battery> listener) 
+        => _onBatteryChanged.RemoveListener(listener);
+
+    #endregion
+    
+    #region OnAuxiliaryModuleChanged
+    
+    private readonly UnityEvent<AuxiliaryModule> _onAuxiliaryModuleChanged 
+        = new UnityEvent<AuxiliaryModule>();
+    
+    public void InvokeOnAuxiliaryModuleChanged(AuxiliaryModule auxiliaryModule) 
+        => _onAuxiliaryModuleChanged.Invoke(auxiliaryModule);
+    public void AddListenerToOnAuxiliaryModuleChanged(UnityAction<AuxiliaryModule> listener) 
+        => _onAuxiliaryModuleChanged.AddListener(listener);
+        
+    public void RemoveListenerFromOnAuxiliaryModuleChanged(UnityAction<AuxiliaryModule> listener) 
+        => _onAuxiliaryModuleChanged.RemoveListener(listener);
 
     #endregion
     
@@ -168,3 +198,4 @@ public class PlayerEvents : MonoBehaviour
 
     #endregion
 }
+

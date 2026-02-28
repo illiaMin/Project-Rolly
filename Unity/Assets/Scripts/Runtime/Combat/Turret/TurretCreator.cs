@@ -8,8 +8,8 @@ public class TurretCreator : MonoBehaviour
     PlayerEvents _playerEvents;
     Transform _aimTarget;
     ProjectilesPool  _projectilesPool;
-    GameObject _projectilePrefab;
-    Turret _turret; 
+    Turret _turret;
+    ProgressRepository _progressRepository;
     
     [SerializeField] private float _distance = 0.6f;
     public void Init(TurretCreatorContext tcc)
@@ -19,7 +19,7 @@ public class TurretCreator : MonoBehaviour
         _playerEvents = tcc.PlayerEvents;
         _aimTarget = tcc.AimTarget;
         _projectilesPool = tcc.ProjectilesPool;
-        _projectilePrefab =  tcc.ProjectilePrefab;
+        _progressRepository = tcc.ProgressRepository;
     }
 
     public void InitializeNewTurret(ModuleName moduleName)
@@ -32,7 +32,10 @@ public class TurretCreator : MonoBehaviour
         GetInfoAboutTurret(turretName, out SO_PlayerTurret info);
         CreateTurret(out Turret turret);
         _turret = turret;
-        Setup(turret, info);
+
+        HP newHP = new HP(info.HpMax);
+        newHP.SetCurrent(_progressRepository.GetTurretHP());
+        Setup(turret, info, newHP);
 
         InitializeTurretAim(turret, info);
 
@@ -53,12 +56,12 @@ public class TurretCreator : MonoBehaviour
         turret = 
             Instantiate(_prefab, transform, false);
     }
-    void Setup(Turret turret, SO_PlayerTurret info)
+    void Setup(Turret turret, SO_PlayerTurret info, HP newHP)
     {
         turret.name = "Turret";
         turret.Initialize(info, _playerEvents);
         turret.transform.localPosition = Vector3.zero;
-
+        turret.SetHP(newHP);
         SpriteRenderer renderer
             = turret.GetSpriteRendererTurret();
         renderer.sprite = info.SpriteTurret;
@@ -81,7 +84,6 @@ public class TurretCreator : MonoBehaviour
     {
         AttackerContext ac = new AttackerContext(
             _playerEvents,
-            _projectilePrefab,
             _projectilesPool,
             _distance,
             info.ProjectileInfo);

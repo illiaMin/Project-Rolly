@@ -7,21 +7,22 @@ public class TurretCreatorContext
     public readonly PlayerEvents PlayerEvents;
     public readonly Transform AimTarget;
     public readonly ProjectilesPool  ProjectilesPool;
-    public readonly GameObject ProjectilePrefab;
-    
+    public int TurretHP;
+    public readonly ProgressRepository ProgressRepository;
+
     public TurretCreatorContext
         (SO_AllModules allModules, 
             Turret prefab, 
             PlayerEvents playerEvents,
             Transform aimTarget,
             ProjectilesPool  projectilesPool,
-            GameObject projectile)
+            ProgressRepository progressRepository)
     {
         AllModules = allModules;
         Prefab = prefab;
         PlayerEvents = playerEvents;
         AimTarget = aimTarget;
         ProjectilesPool = projectilesPool;
-        ProjectilePrefab = projectile;
+        ProgressRepository = progressRepository;
     }
 }

@@ -63,9 +63,67 @@ public class PlayerSetup
     {
         return _playerHasInstalled[KeysForPlayerPrefs.Auxiliary];
     }
-
     public string GetCurrentIDCard()
     {
         return _playerHasInstalled[KeysForPlayerPrefs.IDCard];
+    }
+    
+    public int GetInstalledGunHP()
+    {
+        string name = _playerHasInstalled[KeysForPlayerPrefs.MainGun];
+        int index = _indexesInSavingInfo[name];
+        int HP = _savingInfo.GetModulesList()[index].GetHP();
+        return HP;
+    }
+    public int GetInstalledBatteryHP()
+    {
+        string name = _playerHasInstalled[KeysForPlayerPrefs.Battery];
+        int index = _indexesInSavingInfo[name];
+        int HP = _savingInfo.GetModulesList()[index].GetHP();
+        return HP;
+    }
+    public int GetInstalledVisionHP()
+    {
+        string name = _playerHasInstalled[KeysForPlayerPrefs.VisionModule];
+        int index = _indexesInSavingInfo[name];
+        int HP = _savingInfo.GetModulesList()[index].GetHP();
+        return HP;
+    }
+    
+    public int GetInstalledAuxiliaryHP()
+    {
+        string name = _playerHasInstalled[KeysForPlayerPrefs.Auxiliary];
+        int index = _indexesInSavingInfo[name];
+        int HP = _savingInfo.GetModulesList()[index].GetHP();
+        return HP;
+    }
+    
+    public int GetInstalledLeftWheelsHP()
+    {
+        string name = _playerHasInstalled[KeysForPlayerPrefs.ActiveWheels];
+        int index = _indexesInSavingInfo[name];
+        int HP = _savingInfo.GetModulesList()[index].GetLeftHP();
+        return HP;
+    }
+    public int GetInstalledRightWheelsHP()
+    {
+        string name = _playerHasInstalled[KeysForPlayerPrefs.ActiveWheels];
+        int index = _indexesInSavingInfo[name];
+        int HP = _savingInfo.GetModulesList()[index].GetRightHP();
+        return HP;
+    }
+
+    public bool GetBMenuInstalled()
+    {
+        string name = _playerHasInstalled[KeysForPlayerPrefs.B_MenuKey];
+        if (name != "") return true;
+        return false;
+    }
+    public int GetBMenuHP()
+    {
+        string name = _playerHasInstalled[KeysForPlayerPrefs.B_MenuKey];
+        int index = _indexesInSavingInfo[name];
+        int HP = _savingInfo.GetModulesList()[index].GetHP();
+        return HP;
     }
 }

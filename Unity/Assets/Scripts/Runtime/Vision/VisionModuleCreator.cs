@@ -6,21 +6,27 @@ public class VisionModuleCreator : MonoBehaviour
     private VisionModule _prefab;
     private Transform _robotBody;
     private SO_AllModules _allModules;
+    ProgressRepository _progressRepository;
+
     
-    public void Init(VisionModuleCreatorContext context, ModuleName visionModuleName)
+    public VisionModule Init(VisionModuleCreatorContext context, ModuleName visionModuleName)
     {
         _prefab = context.Prefab;
         _robotBody = context.Transform;
         _allModules = context.AllModules;
-        
-        CreateModule(visionModuleName, context.MaskImage);
+        _progressRepository = context.ProgressRepository;
+        return CreateModule(visionModuleName, context.MaskImage);
     }
 
-    public void CreateModule(ModuleName visionModuleName, Image maskImage)
+    public VisionModule CreateModule(ModuleName visionModuleName, Image maskImage)
     {
         GetInfo(visionModuleName, out SO_VisionModule info);
         CreateModule(out VisionModule module);
-        Setup(module, info, maskImage);
+        HP newHP = new HP(info.MaxHP);
+        newHP.SetCurrent(_progressRepository.GetBatteryHP());
+        
+        Setup(module, info, maskImage, newHP);
+        return module;
     }
     void GetInfo(ModuleName name, out SO_VisionModule info)
     {
@@ -31,10 +37,11 @@ public class VisionModuleCreator : MonoBehaviour
         visionModule = 
             Instantiate(_prefab, _robotBody, false);
     }
-    void Setup(VisionModule visionModule, SO_VisionModule info, Image maskImage)
+    void Setup(VisionModule visionModule, SO_VisionModule info, Image maskImage, HP newHP)
     {
         visionModule.name = "Vision Module";
         visionModule.Init(info, maskImage);
         visionModule.transform.localPosition = Vector3.zero;
+        visionModule.SetHP(newHP);
     }
 }

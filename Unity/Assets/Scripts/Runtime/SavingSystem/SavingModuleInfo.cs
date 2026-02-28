@@ -71,5 +71,9 @@ public class SavingModuleInfo
         _charge = charge;
     }
     
+    public int GetHP() => _currentHp;
+    public int GetLeftHP() => _currentLeftHp;
+    public int GetRightHP() => _currentRightHp;
     public int GetCharge() => _charge;
+    public bool GetInstalled() => _playerHas == 1;
 }

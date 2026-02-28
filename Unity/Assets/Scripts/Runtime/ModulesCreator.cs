@@ -25,6 +25,7 @@ public class ModulesCreator : MonoBehaviour
     {
         ModuleName turretName = _repository.GetMainGunModuleName();
         turretCreator.Init(tc);
+        tc.TurretHP = _repository.GetTurretHP();
         return turretCreator.CreateTurret(turretName);
     }
     
@@ -39,7 +40,7 @@ public class ModulesCreator : MonoBehaviour
         BatteryCreator batteryCreator, BatteryCreatorContext bcc)
     {
         ModuleName batteryName = ModuleName.Battery;
-        _repository.GetBatteryModuleInfo(out int charge);
+        _repository.GetBatteryModuleCharge(out int charge);
         bcc.SetCharge(charge);
         Battery battery = batteryCreator.Init(bcc, batteryName);
         return battery;
@@ -50,10 +51,10 @@ public class ModulesCreator : MonoBehaviour
         ModuleName bMenuName = _repository.GetBMenuModuleName();
         return creator.Create(bcc, bMenuName);
     }
-    public void CreateVisionModule(VisionModuleCreator visionModuleCreator, VisionModuleCreatorContext vc)
+    public VisionModule CreateVisionModule(VisionModuleCreator visionModuleCreator, VisionModuleCreatorContext vc)
     {
         ModuleName visionModuleName = _repository.GetVisionModuleName();
-        visionModuleCreator.Init(vc, visionModuleName);
+        return visionModuleCreator.Init(vc, visionModuleName);
     }
 
     public Dash CreateDash(DashCreator dashCreator, DashCreatorContext dcc)

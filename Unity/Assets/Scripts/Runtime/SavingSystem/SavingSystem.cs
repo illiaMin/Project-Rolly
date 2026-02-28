@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class SavingSystem : MonoBehaviour
@@ -16,7 +17,7 @@ public class SavingSystem : MonoBehaviour
 
     public SavingSystem Init()
     {
-        //PlayerPrefs.DeleteAll();
+        PlayerPrefs.DeleteAll();
         if (!CheckIsGameStartedFirstly())
         {
             FillFirstPlayerPrefs();
@@ -100,7 +101,7 @@ public class SavingSystem : MonoBehaviour
         out int charge)
     {
         string[] parts = value.Split('#');
-        moduleName = (ModuleName)int.Parse(parts[0]);
+        moduleName = Enum.Parse<ModuleName>(parts[0]);
         playerHas = int.Parse(parts[1]);
         tom = (TypeOfModule)int.Parse(parts[2]);
         playerUnlocked = int.Parse(parts[3]);
@@ -112,6 +113,53 @@ public class SavingSystem : MonoBehaviour
         charge = int.Parse(parts[9]);
     }
 
+    public void SaveMainGunAfterGetDmg(int newHP)
+    {
+        string str = _pPReader.GetString(_playerSetup.GetCurrentMainGunName());
+        string[] parts = str.Split('#');
+        parts[4]  = newHP.ToString();
+        str = string.Join('#', parts);
+        _pPWriter.Write(_playerSetup.GetCurrentMainGunName(), str);
+        RefreshSetUp();
+    }
+    public void SaveBatteryAfterGetDmg(int newHP)
+    {
+        string str = _pPReader.GetString(_playerSetup.GetCurrentBatteryName());
+        string[] parts = str.Split('#');
+        parts[4]  = newHP.ToString();
+        str = string.Join('#', parts);
+        _pPWriter.Write(_playerSetup.GetCurrentBatteryName(), str);
+        RefreshSetUp();
+    }
+    public void SaveAuxiliaryAfterGetDmg(int newHP)
+    {
+        string str = _pPReader.GetString(_playerSetup.GetCurrentAuxiliaryModuleName());
+        string[] parts = str.Split('#');
+        parts[4]  = newHP.ToString();
+        str = string.Join('#', parts);
+        _pPWriter.Write(_playerSetup.GetCurrentAuxiliaryModuleName(), str);
+        RefreshSetUp();
+    }
+    public void SaveVisionAfterGetDmg(int newHP)
+    {
+        string str = _pPReader.GetString(nameof(ModuleName.Vision));
+        string[] parts = str.Split('#');
+        parts[4]  = newHP.ToString();
+        str = string.Join('#', parts);
+        _pPWriter.Write(nameof(ModuleName.Vision), str);
+        RefreshSetUp();
+    }
+    public void SaveWheelsDmg(int newHPLeft, int newHPRight)
+    {
+        string str = _pPReader.GetString(_playerSetup.GetCurrentActiveWheels());
+        string[] parts = str.Split('#');
+        parts[6]  = newHPLeft.ToString();
+        parts[7]  = newHPRight.ToString();
+        str = string.Join('#', parts);
+        _pPWriter.Write(_playerSetup.GetCurrentActiveWheels(), str);
+        RefreshSetUp();
+    }
+    
     public void SaveBatteryCharge(int currentCharge)
     {
         string str = _pPReader.GetString(_playerSetup.GetCurrentBatteryName());
@@ -133,7 +181,6 @@ public class SavingSystem : MonoBehaviour
     void FillFirstPlayerPrefs()
     {
         _pPWriter.Write(_gameStartedKey, 1);
-        ;
         SaveAllModulesFirstTime();
         FirstTimeSaveInfoAboutModulesPositions();
     }
@@ -172,6 +219,7 @@ public class SavingSystem : MonoBehaviour
         SaveBattery();
         SaveAuxiliary();
         SaveIDCard();
+        SaveVision();
 
         void SaveMainGun()
         {
@@ -208,6 +256,12 @@ public class SavingSystem : MonoBehaviour
             _pPWriter.Write(
                 nameof(KeysForPlayerPrefs.IDCard), nameof(ModuleName.IdCardRolly));
         }
+        
+        void SaveVision()
+        {
+            _pPWriter.Write(
+                nameof(KeysForPlayerPrefs.VisionModule), nameof(ModuleName.Vision));
+        }
     }
 
     public void SaveMainGun(ModuleName moduleName)
@@ -243,7 +297,11 @@ public class SavingSystem : MonoBehaviour
             nameof(KeysForPlayerPrefs.IDCard), moduleName.ToString());
         RefreshSetUp();
     }
-
+    public void SaveVision(ModuleName moduleName)
+    {
+        _pPWriter.Write(
+            nameof(KeysForPlayerPrefs.VisionModule), moduleName.ToString());
+    } 
     public ListsForB_Menu GetListsFoBMenu() => _listsForB_Menu;
     void RefreshSetUp()
     {

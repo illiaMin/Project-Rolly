@@ -14,6 +14,8 @@ public class BatteryCreator : MonoBehaviour
         battery.transform.localPosition = Vector3.zero;
 
         battery.Init(info, bcc);
+        
+        bcc.PlayerEvents.InvokeOnBatteryChanged(battery);
         return battery;
     }
 }

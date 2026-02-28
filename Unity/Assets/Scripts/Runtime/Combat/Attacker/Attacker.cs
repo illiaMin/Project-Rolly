@@ -3,29 +3,28 @@ using UnityEngine;
 
 public abstract class Attacker : MonoBehaviour
 {
-    protected PlayerEvents PlayerEvents;
-    protected GameObject ProjectilePrefab;
+    protected RobotEvents Events;
     protected ProjectilesPool  ProjectilesPool;
-    protected float Distance = 0.6f;
+    protected float Distance = 1f;
     protected SO_Projectile ProjectileInfo;
 
     public void Init(AttackerContext ac)
     {
-        PlayerEvents = ac.PlayerEvents;
-        ProjectilePrefab = ac.ProjectilePrefab;
+        Events = ac.Events;
         ProjectilesPool = ac.ProjectilesPool;
         Distance = ac.Distance;
         ProjectileInfo = ac.ProjectileInfo;
         
-        PlayerEvents.AddListenerToOnShot(Attack);
+        Events.AddListenerToOnShot(Attack);
+        
     }
     protected abstract void Attack(OnShotEventContext context);
     
     private void OnDisable()
     {
-        if (PlayerEvents != null)
+        if (Events != null)
         {
-            PlayerEvents.RemoveListenerFromOnShot(Attack);
+            Events.RemoveListenerFromOnShot(Attack);
         }
     }
 }

@@ -7,6 +7,8 @@ public class WheelsCreator : MonoBehaviour
     PlayerDrive _playerDrive;
     SO_AllModules _allModules;
     Wheels _wheels;
+    PlayerEvents _playerEvents;
+    ProgressRepository _progressRepository;
     public void InitializeNewWheels(ModuleName moduleName)
     {
         Destroy(_wheels.gameObject);
@@ -18,7 +20,8 @@ public class WheelsCreator : MonoBehaviour
         _prefabWheels = wcc.PrefabWheels;
         _playerDrive = wcc.PlayerDrive;
         _allModules = wcc.AllModules;
-        
+        _playerEvents = wcc.PlayerEvents;
+        _progressRepository = wcc.ProgressRepository;
         Wheels wheels = CreateModule(wheelsName);
         return wheels;
     }
@@ -28,7 +31,13 @@ public class WheelsCreator : MonoBehaviour
         GetInfoAboutWheels(wheelsName, out SO_Wheels info);
         Wheels wheels = CreateWheels();
         _wheels = wheels;
-        Setup(wheels, info);
+        HP newLeftHP = new HP (info.HP.Max);
+        newLeftHP.SetCurrent(_progressRepository.GetWheelsLeftHP());
+        HP newRightHP = new HP (info.HP.Max);
+        newLeftHP.SetCurrent(_progressRepository.GetWheelsRightHP());
+        Setup(wheels, info, newLeftHP, newRightHP);
+        
+        _playerEvents.InvokeOnWheelsChanged(wheels);
         return wheels;
     }
     void GetInfoAboutWheels(ModuleName wheelsName, out SO_Wheels info)
@@ -41,12 +50,15 @@ public class WheelsCreator : MonoBehaviour
             Instantiate(_prefabWheels, _robotBody, false);
         return wheels;
     }
-    void Setup(Wheels wheels, SO_Wheels info)
+    void Setup(Wheels wheels, SO_Wheels info, HP newLeftHP, HP newRightHP)
     {
+        wheels.SetLeftHP(newLeftHP);
+        wheels.SetRightHP(newRightHP);
         wheels.name = "Wheels";
         wheels.Init(info, _robotBody, _playerDrive);
         wheels.transform.localPosition = Vector3.zero;
 
+        
         SpriteRenderer side
             = wheels.GetLeftSide();
         side.sprite = info.LeftSide;
