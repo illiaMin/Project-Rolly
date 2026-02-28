@@ -5,58 +5,55 @@ public class HPOwner : MonoBehaviour
 {
     [SerializeField] RobotEvents _robotEvents;
     [SerializeField] SavingSystem _savingSystem;
-    bool _hasShield = false;
     Shield _shield;
     [SerializeField]List<HP> _hps = new List<HP>();
-    Dictionary<TypeOfDamageble, int> _indexesInHP = new Dictionary<TypeOfDamageble, int>();
+    Dictionary<TypeOfDamageble, HP> _hpsByType = new Dictionary<TypeOfDamageble, HP>();
 
     public HP GetHP(TypeOfDamageble typeOfDamageble)
     {
-        return _hps[_indexesInHP[typeOfDamageble]];
+        return _hpsByType[typeOfDamageble];
     }
-    public void Init(Shield shield)
+    public void SetShield(Shield shield)
     {
         _shield = shield;
     }
     public void Add(HP newHp, TypeOfDamageble typeOfDamageble)
     {
-        if (_indexesInHP.ContainsKey(typeOfDamageble))
+        if (_hpsByType.TryGetValue(typeOfDamageble, out HP oldHp))
         {
-            HP oldHp = _hps[_indexesInHP[typeOfDamageble]];
             _hps.Remove(oldHp);
-            _hps.Add(newHp);
-            _indexesInHP[typeOfDamageble] = _hps.IndexOf(newHp);
         }
-        else
-        {
-            _hps.Add(newHp);
-            _indexesInHP.Add(typeOfDamageble, _hps.IndexOf(newHp));
-        }
+
+        _hps.Add(newHp);
+        _hpsByType[typeOfDamageble] = newHp;
     }
     public void ReceiveDmg(SO_Damage dmg)
     {
-        if (_hasShield)
+        if (IsProtectedByShield())
         {
-            if (_shield.GetProtection())
-            {
-                return;
-            }
-            ApplyDMGToModules(dmg);
-        }
-        else
-        {
-            ApplyDMGToModules(dmg);
+            return;
         }
 
-        _savingSystem.SaveMainGunAfterGetDmg(_hps[_indexesInHP[TypeOfDamageble.Gun]].Current);
-        _savingSystem.SaveBatteryAfterGetDmg(_hps[_indexesInHP[TypeOfDamageble.Battery]].Current);
-        _savingSystem.SaveAuxiliaryAfterGetDmg(_hps[_indexesInHP[TypeOfDamageble.Auxiliary]].Current);
-        _savingSystem.SaveVisionAfterGetDmg(_hps[_indexesInHP[TypeOfDamageble.Vision]].Current);
-        _savingSystem.SaveWheelsDmg(
-            _hps[_indexesInHP[TypeOfDamageble.WheelsLeft]].Current,
-            _hps[_indexesInHP[TypeOfDamageble.WheelsRight]].Current);
-        
+        ApplyDMGToModules(dmg);
+
+        PersistCurrentHpState();
         _robotEvents.InvokeOnDMGRecieved();
+    }
+
+    private bool IsProtectedByShield()
+    {
+        return _shield != null && _shield.GetProtection();
+    }
+
+    private void PersistCurrentHpState()
+    {
+        _savingSystem.SaveMainGunAfterGetDmg(_hpsByType[TypeOfDamageble.Gun].Current);
+        _savingSystem.SaveBatteryAfterGetDmg(_hpsByType[TypeOfDamageble.Battery].Current);
+        _savingSystem.SaveAuxiliaryAfterGetDmg(_hpsByType[TypeOfDamageble.Auxiliary].Current);
+        _savingSystem.SaveVisionAfterGetDmg(_hpsByType[TypeOfDamageble.Vision].Current);
+        _savingSystem.SaveWheelsDmg(
+            _hpsByType[TypeOfDamageble.WheelsLeft].Current,
+            _hpsByType[TypeOfDamageble.WheelsRight].Current);
     }
 
     #region ApplyDMGToModules
@@ -73,10 +70,10 @@ public class HPOwner : MonoBehaviour
     {
         if (dmg == 0) return;
         
-        _hps[_indexesInHP[TypeOfDamageble.Vision]].TakeDmg(dmg);
+        _hpsByType[TypeOfDamageble.Vision].TakeDmg(dmg);
         
         List<HP> modules = new List<HP>(_hps);
-        modules.Remove(_hps[_indexesInHP[TypeOfDamageble.Vision]]);
+        modules.Remove(_hpsByType[TypeOfDamageble.Vision]);
         HP module1 = modules[Random.Range(0, modules.Count)];
         modules.Remove(module1);
         HP module2 = modules[Random.Range(0, modules.Count)];
@@ -92,10 +89,10 @@ public class HPOwner : MonoBehaviour
     {
         if (dmg == 0) return;
         
-        _hps[_indexesInHP[TypeOfDamageble.Auxiliary]].TakeDmg(dmg);
+        _hpsByType[TypeOfDamageble.Auxiliary].TakeDmg(dmg);
         
         List<HP> modules = new List<HP>(_hps);
-        modules.Remove(_hps[_indexesInHP[TypeOfDamageble.Auxiliary]]);
+        modules.Remove(_hpsByType[TypeOfDamageble.Auxiliary]);
         HP module1 = modules[Random.Range(0, modules.Count)];
         modules.Remove(module1);
         HP module2 = modules[Random.Range(0, modules.Count)];
@@ -114,18 +111,18 @@ public class HPOwner : MonoBehaviour
         int r = Random.Range(0, 2);
         if (r == 0)
         {
-            _hps[_indexesInHP[TypeOfDamageble.WheelsLeft]].TakeDmg(dmg);
-            _hps[_indexesInHP[TypeOfDamageble.WheelsRight]].TakeDmg(dmg/2);
+            _hpsByType[TypeOfDamageble.WheelsLeft].TakeDmg(dmg);
+            _hpsByType[TypeOfDamageble.WheelsRight].TakeDmg(dmg/2);
         }
         else if (r == 1)
         {
-            _hps[_indexesInHP[TypeOfDamageble.WheelsRight]].TakeDmg(dmg);
-            _hps[_indexesInHP[TypeOfDamageble.WheelsLeft]].TakeDmg(dmg/2);
+            _hpsByType[TypeOfDamageble.WheelsRight].TakeDmg(dmg);
+            _hpsByType[TypeOfDamageble.WheelsLeft].TakeDmg(dmg/2);
         }
         
         List<HP> modules = new List<HP>(_hps);
-        modules.Remove(_hps[_indexesInHP[TypeOfDamageble.WheelsLeft]]);
-        modules.Remove(_hps[_indexesInHP[TypeOfDamageble.WheelsRight]]);
+        modules.Remove(_hpsByType[TypeOfDamageble.WheelsLeft]);
+        modules.Remove(_hpsByType[TypeOfDamageble.WheelsRight]);
  
         HP module2 = modules[Random.Range(0, modules.Count)];
         modules.Remove(module2);
@@ -139,10 +136,10 @@ public class HPOwner : MonoBehaviour
     {
         if (dmg == 0) return;
         
-        _hps[_indexesInHP[TypeOfDamageble.Gun]].TakeDmg(dmg);
+        _hpsByType[TypeOfDamageble.Gun].TakeDmg(dmg);
         
         List<HP> modules = new List<HP>(_hps);
-        modules.Remove(_hps[_indexesInHP[TypeOfDamageble.Gun]]);
+        modules.Remove(_hpsByType[TypeOfDamageble.Gun]);
         HP module1 = modules[Random.Range(0, modules.Count)];
         modules.Remove(module1);
         HP module2 = modules[Random.Range(0, modules.Count)];

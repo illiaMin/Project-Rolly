@@ -225,57 +225,35 @@ public class PlayerCompositionRoot : MonoBehaviour
     
     void CreateAuxiliaryModule()
     {
+        if (_currentAuxiliaryModule is Dash previousDash)
+        {
+            _playerEvents.RemoveListenerFromOnDashToggle(previousDash.Toggle);
+        }
+
         if (_currentAuxiliaryModule != null) Destroy(_currentAuxiliaryModule.gameObject);
-        
-        
-        switch (_progressRepository.GetCurrentAuxiliaryName())
+
+        DashCreatorContext dashContext = CreateDashContext();
+        MinimapCreatorConrext miniMapContext = CreateMinimapCreatorContext();
+        ShieldCreatorContext shieldContext = CreateShieldContext();
+
+        ModulesCreator.AuxiliaryCreationResult auxiliary = _modulesCreator.CreateAuxiliary(
+            _dashCreator,
+            dashContext,
+            _minimapCreator,
+            miniMapContext,
+            _shieldCreator,
+            shieldContext);
+
+        _currentAuxiliaryModule = auxiliary.Module;
+        _hpOwner.SetShield(auxiliary.Shield);
+        _hpOwner.Add(auxiliary.Hp, TypeOfDamageble.Auxiliary);
+
+        if (_currentAuxiliaryModule is Dash dash)
         {
-            case ModuleName.Dash:
-                DashCreatorContext dcc = CreateDashContext();
-                Dash dash = _modulesCreator.CreateDash(_dashCreator, dcc);
-                _playerEvents.AddListenerToOnDashToggle(dash.Toggle);
-                _currentAuxiliaryModule = dash;
-                break;
-            case ModuleName.Minimap:
-                MinimapCreatorConrext mmcc = CreateMinimapCreatorContext();
-                MiniMap miniMap = _modulesCreator.CreateMiniMap(_minimapCreator, mmcc);
-                _currentAuxiliaryModule = miniMap;
-                break;
-            case ModuleName.Shield:
-                ShieldCreatorContext scc = CreateShieldContext();
-                Shield shield = _modulesCreator.CreateShield(_shieldCreator, scc);
-                _currentAuxiliaryModule = shield;
-                break;
+            _playerEvents.AddListenerToOnDashToggle(dash.Toggle);
         }
-        int auxHP = _progressRepository.GetAuxiliaryHP();
-        if (_progressRepository.GetCurrentAuxiliaryName() == ModuleName.Dash)
-        {
-            SO_Dash info =
-                _allModules.Modules.Get(_progressRepository.GetCurrentAuxiliaryName()) as SO_Dash;
-            HP hp = new HP(info.HP);
-            hp.SetCurrent(auxHP);
-            _hpOwner.Add(hp, TypeOfDamageble.Auxiliary);
-        }
-        else if (_progressRepository.GetCurrentAuxiliaryName() == ModuleName.Minimap)
-        {
-            SO_Minimap info =
-                _allModules.Modules.Get(_progressRepository.GetCurrentAuxiliaryName()) as SO_Minimap;
-            HP hp = new HP(info.HP);
-            hp.SetCurrent(auxHP);
-            _hpOwner.Add(hp, TypeOfDamageble.Auxiliary);
-        }
-        else if (_progressRepository.GetCurrentAuxiliaryName() == ModuleName.Shield)
-        {
-            SO_Shield info =
-                _allModules.Modules.Get(_progressRepository.GetCurrentAuxiliaryName()) as SO_Shield;
-            HP hp = new HP(info.HP);
-            hp.SetCurrent(auxHP);
-            _hpOwner.Add(hp, TypeOfDamageble.Auxiliary);
-        }
-           
-        
+
         _playerEvents.InvokeOnAuxiliaryModuleChanged(_currentAuxiliaryModule);
     }
     
 }
-

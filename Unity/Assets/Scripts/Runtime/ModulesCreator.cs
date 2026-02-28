@@ -1,11 +1,16 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ModulesCreator : MonoBehaviour
 {
+    public struct AuxiliaryCreationResult
+    {
+        public AuxiliaryModule Module;
+        public Shield Shield;
+        public HP Hp;
+    }
+
     private ProgressRepository _repository;
     private SO_AllModules _allModules;
-    private AuxiliaryModule _currentAuxiliaryModule;
     public void Init(
         SO_AllModules allModules,
         ProgressRepository progressRepository,
@@ -62,6 +67,59 @@ public class ModulesCreator : MonoBehaviour
         return dashCreator.Create(dcc);
     }
 
+    public AuxiliaryCreationResult CreateAuxiliary(
+        DashCreator dashCreator,
+        DashCreatorContext dashContext,
+        MiniMapCreator miniMapCreator,
+        MinimapCreatorConrext miniMapContext,
+        ShieldCreator shieldCreator,
+        ShieldCreatorContext shieldContext)
+    {
+        ModuleName auxiliaryName = _repository.GetCurrentAuxiliaryName();
+        int currentAuxHp = _repository.GetAuxiliaryHP();
+
+        AuxiliaryCreationResult result = new AuxiliaryCreationResult();
+        switch (auxiliaryName)
+        {
+            case ModuleName.Dash:
+                result.Module = CreateDashAuxiliary(dashCreator, dashContext);
+                break;
+            case ModuleName.Minimap:
+                result.Module = CreateMiniMapAuxiliary(miniMapCreator, miniMapContext);
+                break;
+            case ModuleName.Shield:
+                result.Module = CreateShieldAuxiliary(shieldCreator, shieldContext, out Shield shield);
+                result.Shield = shield;
+                break;
+            default:
+                result.Module = CreateShieldAuxiliary(shieldCreator, shieldContext, out Shield defaultShield);
+                result.Shield = defaultShield;
+                break;
+        }
+
+        int maxHp = ResolveAuxiliaryMaxHp(auxiliaryName, currentAuxHp);
+        result.Hp = new HP(maxHp);
+        result.Hp.SetCurrent(currentAuxHp);
+
+        return result;
+    }
+
+    private Dash CreateDashAuxiliary(DashCreator dashCreator, DashCreatorContext dashContext)
+    {
+        return dashCreator.Create(dashContext);
+    }
+
+    private MiniMap CreateMiniMapAuxiliary(MiniMapCreator miniMapCreator, MinimapCreatorConrext miniMapContext)
+    {
+        return miniMapCreator.Create(miniMapContext);
+    }
+
+    private Shield CreateShieldAuxiliary(ShieldCreator shieldCreator, ShieldCreatorContext shieldContext, out Shield shield)
+    {
+        shield = shieldCreator.Create(shieldContext);
+        return shield;
+    }
+
     public Shield CreateShield(ShieldCreator shieldCreator, ShieldCreatorContext scc)
     {
         return shieldCreator.Create(scc);
@@ -76,5 +134,27 @@ public class ModulesCreator : MonoBehaviour
     {
         ModuleName name = _repository.GetIDCardModuleName();
         return idCardCreator.Create(idcc, name);
+    }
+
+    private int ResolveAuxiliaryMaxHp(ModuleName auxiliaryName, int fallbackMaxHp)
+    {
+        ScriptableObject moduleInfo = _allModules.Modules.Get(auxiliaryName);
+
+        if (moduleInfo is SO_Dash dashInfo)
+        {
+            return dashInfo.HP;
+        }
+
+        if (moduleInfo is SO_Minimap minimapInfo)
+        {
+            return minimapInfo.HP;
+        }
+
+        if (moduleInfo is SO_Shield shieldInfo)
+        {
+            return shieldInfo.HP;
+        }
+
+        return fallbackMaxHp;
     }
 }
